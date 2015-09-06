@@ -1,0 +1,60 @@
+﻿<div ng-show="data.Entity && !data.hideBlock">
+    <p ng-show="data.Entity.Process"><b>Process: </b>{{data.Entity.Process}}</p>
+    <p ng-show="data.Entity.Description"><b>Description: </b>{{data.Entity.Description}}</p>
+</div>
+<div class="document" ng-repeat='(key, prop) in data.Children track by key'>
+    <content-item ng-show="data.Children[key].length > 0" item='{ Type: key, Entity: {Name: key.indexOf(data.Type) > -1 ? "Sub-"+key : key} , count: 4, size:header+1}'
+                  on-button="data['hide' + key] = !data['hide' + key]" on-edit="data['hide' + key]" '></content-item>
+    <div class="animate-hide" ng-hide="data['hide'+key] ">
+        <div ng-repeat="child in data.Children[key]">
+            <content-item item='child' on-button="child.hide = !child.hide" on-edit="child.hide">
+            </content-item>
+            <div class="animate-hide" ng-hide="child.hide">
+                <document-children data="child" header="header+1" type="child.Type">
+
+                </document-children>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="top-buffer">
+    <div ng-if="data.Metadata.Tasks && data.Metadata.Tasks.length > 0">
+        <h3 ng-attr-id="{{ 'requirement-task-' + data.Entity.Id }}">{{data.Entity.Name}} Requirement's Tasks</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Risk</th>
+                    <th>Risk Status</th>
+                    <th>Effort</th>
+                    <th>Effort Estimated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in data.Metadata.Tasks">
+                    <th scope="row">{{$index+1}}</th>
+                    <td>{{task.Entity.Name}}</td>
+                    <td>{{task.Entity.RiskType | ordinal}}</td>
+                    <td>{{task.Entity.RiskStatus}}</td>
+                    <td>{{task.Entity.Effort}}</td>
+                    <td>{{task.Entity.EffortEstimation}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="data.RelatedTasks.length == 0">
+        <p class="lead">No Tasks</p>
+    </div>
+</div>
+<div ng-if="data.Trees.Notes">
+    <div ng-repeat="child in data.Trees.Notes">
+        <content-item item='child' on-button="child.hide = !child.hide" on-edit="child.hide">
+        </content-item>
+        <div class="animate-hide" ng-hide="child.hide">
+            <document-children data="child" type="Note">
+
+            </document-children>
+        </div>
+    </div>
+</div>

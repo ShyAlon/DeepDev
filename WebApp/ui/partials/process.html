@@ -1,0 +1,23 @@
+<div class="container" fade-in>
+    <div style="padding-top: 2em;">
+        <div class="jumbotron">
+            <div style="padding-bottom: 1em;" class="pull-right">
+                <span>
+                    <img src="favicon-2.png">
+                </span>
+            </div>
+            <div class="page-header">
+                <h1>DeepDev</h1>
+                <h2>The Process</h2>
+            </div>
+            <div bs-active-pane="tabs.activeTab" bs-tabs>
+                <div ng-repeat="tab in tabs" title="{{ tab.title }}" ng-include="tab.template"  bs-pane></div>
+            </div>
+            <a class="btn btn-large btn-primary" href="#/login" ng-hide="$root.userName">Login to Start</a>
+            <button class="btn btn-sm btn-success" href="#" ng-click="$root.createProject()" onclick="return false;" role="button" id="createNewProjectButton" ng-show="$root.userName"
+                    bs-tooltip="buttonTooltip('createProject')" placement="auto">
+                {{'createProject' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

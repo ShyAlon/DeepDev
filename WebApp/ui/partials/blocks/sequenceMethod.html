@@ -1,0 +1,19 @@
+﻿<div class="col-sm-4 animate-hide top-buffer" bs-tooltip="$root.tooltip(item.Entity.Id > 0 ? 'sequenceMethod' : item.Entity.Id % 2 == -1 ? 'methodReturnMarker' : 'methodNoReturnMarker', null, item)" 
+     placement="auto">
+    <div class=" well well-sm row-fluid small-padding">
+        <span ng-class="{largeWidth: item.Entity.RiskType == 'None', smallWidth: item.Entity.RiskType != 'None'}">{{item.Parent.Name}}.{{item.Entity.Name}} </span>
+        <span ng-show="item.Entity.RiskType != 'None' && item.Entity.Id > 0" ng-class="{lowRisk: item.Entity.RiskStatus == 'Unknown', highRisk: item.Entity.RiskStatus == 'Terminal'}">
+            Risk: {{item.Entity.RiskStatus}}
+        </span>
+        <span class="row top-buffer">
+            <button class="btn btn-sm btn-default" ng-click="onEdit(item)" ng-show="item.Entity.Id > 0">Edit</button>
+            <button class="btn btn-sm btn-primary " ng-click="onAdd(item)" ng-show="item.Entity.Id > 0">Return</button>
+            <button class="btn btn-sm btn-info " ng-click="onRemove(item)" ng-show="item.Entity.Id > 0">No Return</button>
+            <button class="btn btn-sm btn-success " ng-click="onReplace(item)" ng-show="item.Entity.Id > 0">Insert</button>
+            <button class="btn btn-sm btn-danger " ng-click="onButton()" onclick="return false;" role="button" style="float: right;">Remove</button>
+        </span>
+        <span class="row top-buffer">
+            <input style="width:100%" type="text" id="name" name="itemName" placeholder="Comment" ng-model="item.comment">
+        </span>
+    </div>
+</div>

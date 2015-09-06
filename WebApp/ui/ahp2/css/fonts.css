@@ -1,0 +1,7 @@
+@font-face {
+	font-family: 'EuropeExt';
+	src: local('EuropeExt'), 
+	     url('../fonts/EuropeExt.otf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}

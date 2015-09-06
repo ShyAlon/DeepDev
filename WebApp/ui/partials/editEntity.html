@@ -1,0 +1,477 @@
+﻿<div class="container" fade-in
+     ng-intro-options="IntroOptions" ng-intro-method="startTour"
+     ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+     ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+     ng-intro-onafterchange="AfterChangeEvent" ng-intro-autorefresh="true"
+     ng-intro-autostart="ShouldAutoStart()">
+    <div class="row">
+        <div class="well well-sm" id="entityHeader" bs-tooltip="tooltip($root.data.Type+'Description')" placement="auto">
+            <h1>
+                {{$root.wizardItem.IndexString}} {{$root.wizardItem.Name || 'Entity name here...' | ordinal}}
+                <small>({{$root.data.Type || 'Entity type' | ordinal}})</small>
+                <a class="bt" ng-click="startTour();" style="float:right;"><i class="fa fa-question-circle"></i></a>
+            </h1>
+        </div>
+        <div class="row top-buffer">
+            <div style="text-align:center">
+                <add-button></add-button>
+                <add-task-button></add-task-button>
+                <add-note-button></add-note-button>
+                <save-button></save-button>
+                <duplicate-button></duplicate-button>
+                <delete-button></delete-button>
+            </div>
+        </div>
+        <form name="generalForm" class="row form-horizontal top-buffer offset1">
+            <div block type="section" item="{ title: 'General', count: ' '}" on-button="$root.data['hideGeneral'] = !$root.data['hideGeneral']" on-edit="    $root.data['hideGeneral'] "></div>
+            <div class="row animate-hide" ng-hide="$root.data['hideGeneral'] ">
+                <div class="form-group top-buffer" bs-tooltip="itemTooltip('Name')" placement="auto">
+                    <label class=" control-label col-sm-2" for="itemName">
+                        Name
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="itemName" name="itemName" ng-readonly="!$root.canEdit" placeholder="Name" ng-model="$root.wizardItem.Name" ng-readonly="!$root.canEdit" required>
+                        <span class=" error" ng-show="generalForm.itemName.$error.required">
+                            Name Required!
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group top-buffer" bs-tooltip="itemTooltip('Index')" placement="auto" ng-if="$root.wizardItem.Index && $root.wizardItem.Index.length > 0">
+                    <label class=" control-label col-sm-2" for="itemIndex">
+                        Index
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="itemIndex" name="itemIndex" ng-readonly="!$root.canEdit" placeholder="Index" ng-model="$root.wizardItem.IndexString" ng-readonly="!$root.canEdit">
+                        <span class=" error" ng-show="generalForm.itemIndex.$error.required">
+                            Index Required!
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group top-buffer" bs-tooltip="itemTooltip('DisplayAtTop')" placement="auto" ng-if="$root.wizardItem.DisplayAtTop != null">
+                    <label class=" control-label col-sm-2" for="itemDisplayAtTop">
+                        Document Position
+                    </label>
+                    <div class="col-sm-8">
+                        <div class="btn-group" ng-model="$root.wizardItem.DisplayAtTop" bs-radio-group>
+                            <label class="btn btn-success"><input type="radio" class="btn btn-default" value="true"> Display at the Top </label>
+                            <label class="btn btn-success"><input type="radio" class="btn btn-default" value="false"> Display at the Bottom </label>
+                        </div>
+                        <span class=" error" ng-show="generalForm.itemIndex.$error.required">
+                            Index Required!
+                        </span>
+                    </div>
+                </div>
+                <!-- pre class="bs-example-scope">$scope.button = {{$root.wizardItem | json}};</pre -->
+                <div class="form-group top-buffer" bs-tooltip="itemTooltip('DisplayInDesign')" placement="auto" ng-if="$root.wizardItem.DisplayInDesign != null">
+                    <label class=" control-label col-sm-2" for="itemDisplayInDesign">
+                        Document Types
+                    </label>
+                    <div class="col-sm-8">
+                        <div class="btn-group" ng-model="$root.wizardItem" bs-checkbox-group>
+                            <label class="btn btn-success"><input type="checkbox" value="DisplayInDesign"> Design </label>
+                            <label class="btn btn-success"><input type="checkbox" value="DisplayInRequirements"> Requirements</label>
+                            <label class="btn btn-success"><input type="checkbox" value="DisplayInTasks"> Tasks</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group top-buffer" bs-tooltip="itemTooltip('Description')" placement="auto">
+                    <label class="control-label col-sm-2" for="itemDescription">Description</label>
+                    <div class="col-sm-8">
+                        <text-angular id="itemDescription" name="itemDescription" ng-readonly="!$root.canEdit" placeholder="Description" ng-model="$root.wizardItem.Description" ng-readonly="!$root.canEdit" required></text-angular>
+                        <span class="error" ng-show="generalForm.itemDescription.$error.required">
+                            Description Required!
+                        </span>
+                    </div>
+                </div>
+
+                </div>
+
+            <div ng-if="$root.data.Owners != null || $root.data.IssueStatuses || $root.wizardItem.Priority != null || $root.data.Type == 'Project' || $root.data.Processes != null || $root.wizardItem.hasOwnProperty('Result')">
+                <div block type="section" item="{ title: 'Status', count: ' '}" on-button="$root.data['hideStatus'] = !$root.data['hideStatus']" on-edit="    $root.data['hideStatus'] "></div>
+                <div class="row animate-hide" ng-hide="$root.data['hideStatus'] ">
+                    <div class="form-group top-buffer" ng-show="$root.data.Owners != null" bs-tooltip="itemTooltip('Owner')" placement="auto">
+                        <label class="control-label col-sm-2" for="itemOwner">Owner</label>
+                        <div class="col-sm-4">
+                            <input type=text list="owners" class="form-control" id="itemOwner" name="itemOwner" ng-readonly="!$root.canEdit" placeholder="Owner" ng-model="$root.wizardItem.Owner" ng-required="$root.data.Owners">
+                            <datalist id="owners">
+                                <option ng-repeat="listItem in $root.data.Owners">{{listItem}}</option>
+                            </datalist>
+                            <span class="error" ng-show="generalForm.itemOwner.$error.required">
+                                Owner Required!
+                            </span>
+                        </div>
+                    </div>
+                    <div class="" ng-show="$root.data.IssueStatuses" bs-tooltip="itemTooltip('Status')" placement="auto">
+                        <div class="form-group top-buffer">
+                            <label class="control-label col-sm-2" for="status">Status</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" ng-model="$root.wizardItem.Status" ng-options="name as (name | ordinal) for name in $root.data.IssueStatuses" id="itemRiskStatus" id="itemStatus"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="$root.wizardItem.Priority != null" bs-tooltip="itemTooltip('Priority')" placement="auto">
+                        <label class="control-label col-sm-2" for="itemPriority">Priority</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" id="itemPriority" step="1" min="0" ng-readonly="!$root.canEdit" placeholder="Priority" ng-model="$root.wizardItem.Priority">
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="$root.data.Type == 'Project'">
+                        <label class="control-label col-sm-2" for="exportProject">Import / Export</label>
+                        <div class="col-sm-4" bs-tooltip="itemTooltip('exportProject')" placement="auto">
+                            <a class="btn btn-success" id="exportProject" ng-click="exportProject()" download="backup.json"
+                               ng-disabled="generalForm.$invalid" onclick="return false;" role="button">Export Project</a>
+                        </div>
+                        <div class="col-sm-8">
+                            <span class="error" ng-show="generalForm.riskStatus.$error.required">
+                                Execution UnitRequired!
+                            </span>
+                        </div>
+                    </div>
+                    <div ng-show="$root.wizardItem.hasOwnProperty('Result')">
+                        <div class="form-group top-buffer" bs-tooltip="itemTooltip('Result')" placement="auto">
+                            <label class="control-label col-sm-2" for="itemResult">Result</label>
+                            <div class="col-sm-8">
+                                <textarea style="width:100%" rows="5" id="itemResult" name="itemResult" ng-readonly="!$root.canEdit" placeholder="Result" ng-model="$root.wizardItem.Result" ng-readonly="!$root.canEdit" ng-required="showResult"></textarea>
+                                <span class="error" ng-show="generalForm.itemDescription.$error.required">
+                                    itemResult Required!
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="$root.data.Processes != null" bs-tooltip="itemTooltip('Process')" placement="auto">
+                        <label class="control-label col-sm-2" for="itemProcess">Process</label>
+                        <div class="col-sm-8">
+                            <input type=text list="processes" class="form-control" id="itemProcess" name="itemProcess" ng-readonly="!$root.canEdit" placeholder="The process hosting the module" ng-model="$root.wizardItem.Process" ng-required="$root.data.Processes">
+                            <datalist id="processes">
+                                <option ng-repeat="listItem in $root.data.Processes">{{listItem}}</option>
+                            </datalist>
+                            <span class="error" ng-show="generalForm.itemProcess.$error.required">
+                                Process Required!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+
+            <div ng-if="showEffort || showEffortEstimation || $root.wizardItem.RiskType != null || $root.wizardItem.RiskStatus != null">
+                <div block type="section" item="{ title: 'Effort and Risk', count: ' '}" on-button="$root.data['hideEffortRisk'] = !$root.data['hideEffortRisk']" on-edit="    $root.data['hideEffortRisk'] "></div>
+                <div class="row animate-hide" ng-hide="$root.data['hideEffortRisk'] ">
+                    <div class="form-group top-buffer" ng-show="showEffort" bs-tooltip="itemTooltip('Effort')" placement="auto">
+                        <label class="control-label col-sm-2" for="itemEffort">Actual Effort (Hours)</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" id="itemEffort" step="1" min="0" ng-readonly="!$root.canEdit" placeholder="Effort" ng-model="$root.wizardItem.Effort">
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="showEffortEstimation" bs-tooltip="itemTooltip('EffortEstimationMean')" placement="auto">
+                        <label class="control-label col-sm-2" for="itemEffortEstimation">Realistic Effort Estimation (Hours)</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" id="itemEffortEstimation" step="1" min="0" ng-readonly="!$root.canEdit" placeholder="Realistic Effort Estimation" ng-model="$root.wizardItem.EffortEstimationMean">
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="showEffortEstimation" bs-tooltip="itemTooltip('EffortEstimationPessimistic')" placement="auto">
+                        <label class="control-label col-sm-2" for="itemEffortEstimation">Pessimistic Effort Estimation (Hours)</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" id="itemEffortEstimation" step="1" min="0" ng-readonly="!$root.canEdit" placeholder="Pessimistic Effort Estimation" ng-model="$root.wizardItem.EffortEstimationPessimistic">
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="showEffortEstimation" bs-tooltip="itemTooltip('EffortEstimationOptimistic')" placement="auto">
+                        <label class="control-label col-sm-2" for="itemEffortEstimation">Optimistic Effort Estimation (Hours)</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="number" id="itemEffortEstimation" step="1" min="0" ng-readonly="!$root.canEdit" placeholder="Optimistic Effort Estimation" ng-model="$root.wizardItem.EffortEstimationOptimistic">
+                        </div>
+                        <div class="col-sm-8">
+                            <span class="error" ng-show="generalForm.riskType.$error.required">
+                                Risk Required!
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="$root.wizardItem.RiskType != null" bs-tooltip="itemTooltip('RiskType')" placement="auto">
+                        <label class="control-label col-sm-2" for="itemRisk">Risk</label>
+                        <div class="col-sm-2" style=" padding-top: 6px;">
+                            <span class="label" style="vertical-align: bottom; font-size: larger" id="itemRisk" ng-class="getTaskStatus($root.wizardItem).shy">{{$root.wizardItem.RiskType | ordinal}}</span>
+                        </div>
+                        <label class="control-label col-sm-2" for="itemEffortEstimation">Effort Estimated</label>
+                        <div class="col-sm-2" style=" padding-top: 6px;">
+                            <span class="label label-info" style="vertical-align: bottom; font-size:larger" id="itemEffortEstimation">{{$root.wizardItem.EffortEstimation}}</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group top-buffer" ng-show="$root.wizardItem.RiskStatus != null">
+                        <label class="control-label col-sm-2" for="itemRiskStatus">Risk Status</label>
+                        <div class="col-sm-4" bs-tooltip="itemTooltip('RiskStatus')" placement="auto">
+                            <select class="form-control" ng-model="$root.wizardItem.RiskStatus" ng-options="(status | ordinal) for status in $root.RiskStatuses track by status" id="itemRiskStatus"></select>
+                        </div>
+                        <div class="col-sm-8">
+                            <span class="error" ng-show="generalForm.riskStatus.$error.required">
+                                Risk Status Required!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <div ng-if="$root.wizardItem.ContainerID != null || $root.data.Entity.StartTime != null || $root.data.Entity.EndTime != null || $root.data.Entity.Deadline != null">
+                <div block type="section" item="{ title: 'Scheduling', count: ' '}" on-button="$root.data['hideScheduling'] = !$root.data['hideScheduling']" on-edit="  $root.data['hideScheduling'] "></div>
+                <div class="row animate-hide" ng-hide="$root.data['hideScheduling'] ">
+                    <div class="form-group top-buffer" ng-show="$root.wizardItem.ContainerID != null">
+                        <label class="control-label col-sm-2" for="itemContainerID">Execution Unit</label>
+                        <div class="col-sm-4" bs-tooltip="itemTooltip('ContainerID')" placement="auto">
+                            <select class="form-control" ng-model="$root.unit" ng-options="unit.name for unit in executionUnits() track by unit.counter" id="itemContainerID"></select>
+                        </div>
+                        <div class="col-sm-8">
+                            <span class="error" ng-show="generalForm.riskStatus.$error.required">
+                                Execution UnitRequired!
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="$root.data.Entity.StartTime != null" bs-tooltip="itemTooltip('StartTime')" placement="auto" id="itemStartTime">
+                        <label class="control-label col-sm-2" for="itemStartTime">Start Date</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="$root.data.Entity.StartTime" data-date-type="date" id="itemStartTime"
+                                   data-autoclose="1" name="date3" bs-datepicker data-date-format="longDate">
+                            <span class="error" ng-show="generalForm.itemStartTime.$error.required">
+                                Start Date Required!
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="$root.data.Entity.EndTime != null" bs-tooltip="itemTooltip('EndTime')" placement="auto" id="itemEndTime">
+                        <label class="control-label col-sm-2" for="itemEndTime">End Date</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="$root.data.Entity.EndTime" data-date-type="date" id="itemEndTime"
+                                   data-autoclose="1" name="date4" bs-datepicker data-date-format="longDate">
+                            <span class="error" ng-show="generalForm.itemEndTime.$error.required">
+                                End Date Required!
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group top-buffer" ng-show="$root.data.Entity.Deadline != null" bs-tooltip="itemTooltip('Deadline')" placement="auto" id="itemDeadline">
+                        <label class="control-label col-sm-2" for="itemOwner">Deadline</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="$root.data.Entity.Deadline" data-date-type="date"
+                                   data-autoclose="1" name="date2" bs-datepicker data-date-format="longDate">
+                            <span class="error" ng-show="generalForm.itemOwner.$error.required">
+                                Deadline Required!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                
+        </form>
+
+        <div class="row">
+            <div ng-if="$root.data.PotentialPredecessors || $root.data.AvailableRequirements">
+                <div block type="section" item="{ title: 'Predecessors and Related Requirements', count: ' '}" on-button="$root.data['hidePredecessors'] = !$root.data['hidePredecessors']" on-edit="    $root.data['hidePredecessors'] "></div>
+                <div class="row animate-hide" ng-hide="$root.data['hidePredecessors'] ">
+                    <div ng-show="$root.data.PotentialPredecessors">
+                        <form class="form-group top-buffer row" bs-tooltip="itemTooltip('PredecessorIds')" placement="auto">
+                            <div class="col-sm-3 col-sm-offset-3">
+                                <select class="form-control" ng-model="$root.newPredecessor" ng-options="c.Entity.Name for c in unrelatedPredecessors() track by c.Entity.Id" ng-disabled="unrelatedPredecessors().length == 0" id="itemPredecessorIds"></select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary center-block col-sm-2 form-control" ng-click="addPredecessor()" ng-disabled="unrelatedPredecessors().length == 0">Add Predecessor</button>
+                            </div>
+                        </form>
+                        <div class="top-buffer" ng-repeat="pred in relatedPredecessors()">
+                            <div block type="wizardlineWide" entity-type="$root.data.Type" item="pred.Entity" on-button="removePredecessor(pred.Entity)"></div>
+                        </div>
+                    </div>
+
+                    <div ng-if="$root.data.AvailableRequirements">
+                        <form class="form-group top-buffer row" bs-tooltip="itemTooltip('NewRequirement')" placement="auto">
+                            <div class="col-sm-3 col-sm-offset-3">
+                                <select class="form-control" ng-model="$root.newRequirement" ng-options="c.Name for c in unrelatedRequirements()" ng-disabled="unrelatedRequirements().length == 0" id="itemNewRequirement"></select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary center-block col-sm-2 form-control" ng-click="addRequirement()" ng-disabled="unrelatedRequirements().length == 0">Relate Requirement</button>
+                            </div>
+                        </form>
+                        <div class="top-buffer" ng-repeat="requirement in relatedRequirements()">
+                            <div block type="wizardlineWide" entity-type="'Requirements'" item="requirement" on-button="removeRequirement(requirement)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div ng-if="$root.data.Users != null && $root.data.UserRole==-1">
+                <div block type="section" item="{ title: 'Collaboration', count: ' '}" on-button="$root.data['hideSharing'] = !$root.data['hideSharing']"
+                     on-edit="    $root.data['hideSharing'] "></div>
+                <div class="row animate-hide" ng-hide="$root.data['hideSharing'] ">
+                    <div class="row top-buffer">
+                        <div class="" style="text-align:center">
+                            <button class="btn btn-lg btn-success" href="#" ng-click="saveUsers()" ng-disabled="generalForm.$invalid" onclick="return false;" role="button">Update Users</button>
+                        </div>
+                    </div>
+                    <form class="form-horizontal">
+                        <div class="row top-buffer" id="itemProjectUser">
+                            <div class="col-sm-3 col-sm-offset-3">
+                                <select class="form-control" ng-model="$root.projectUserEmail" ng-options="name as (name | ordinal) for name in $root.data.PotentialUsers"
+                                        bs-tooltip="itemTooltip('ProjectUser')"></select>
+                            </div>
+                            <div class="col-sm-3">
+                                <select class="form-control" ng-model="$root.userType" ng-options="c as (c.name | ordinal) for c in usersTypes"></select>
+                            </div>
+                            <div class="col-sm-3">
+                                <button class="btn btn-primary center-block" style="margin-left: 30px;" ng-click="addUser()"
+                                        ng-disabled="$root.projectUserEmail == $root.userEmail ">
+                                    Add User
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div ng-repeat="userGroup in usersTypes">
+                        <div class="col-sm-offset-1 col-sm-10">
+                            <div block type="collapse" item="{ title: userGroup.name, count: userGroup.users.length}" on-button="userGroup.hide = !userGroup.hide" on-edit=" userGroup.hide"></div>
+                            <div class="row animate-hide" ng-hide="userGroup.hide">
+                                <div ng-repeat="user in userGroup.users">
+                                    <div block type="projectUser" item="user" on-button="removeUser(item, userGroup)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="data.Type != 'UseCase'" children></div>
+
+            <div ng-show="$root.data.MissingMethods" block type="collapse" item="{ title: 'Unimplemented Methods', count: $root.data.MissingMethods.length}"
+                 on-button="hideActions = !hideActions" on-edit="hideActions"></div>
+            <div class="row animate-hide" ng-hide="hideActions" bs-tooltip="itemTooltip('MissingMethods')" placement="auto">
+                <div class="top-buffer" ng-repeat="child in $root.data.MissingMethods">
+                    <div class="row-fluid">
+                        <div class="span11">
+                            <div block type="test" item="child" on-edit="editChild({ Entity: child, Type: 'useCaseAction' })" " hide-remove=" true" data="{Type: 'Action without Method'}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="data.Type != 'UseCase'" ng-show="$root.data.Methods">
+                <div class="top-buffer" ng-repeat="child in $root.data.Methods">
+                    <div block type="method" item="child" on-button="deleteChild({ item: child })"
+                         on-edit="editChild({ item: child })" get-status="getChildStatus({ item: child })"></div>
+                </div>
+            </div>
+            <div ng-show="$root.data.Children.TestParameters != null" class="span12">
+                <div block type="collapse" item="{ title: 'Defined Parameters', count: includedTestParameters().length}" on-button="hideDefinedItems = !hideDefinedItems" on-edit="hideDefinedItems"></div>
+                <div class="row animate-hide" ng-hide="hideDefinedItems">
+                    <div class="row top-buffer" ng-repeat="child in includedTestParameters()">
+                        <div block type="testParameter" item="child" on-button="deleteChild({ item: child })"
+                             on-edit="editChild({ item: child })" get-status="getChildStatus({ item: child })"></div>
+                    </div>
+                </div>
+                <div block type="collapse" item="{ title: 'Available Parameters', count: potentialTestParameters().length}" on-button="hidepotentialTestParameters = !hidepotentialTestParameters" on-edit="hidepotentialTestParameters"></div>
+                <div class="row animate-hide" ng-hide="hidepotentialTestParameters">
+                    <div class="row top-buffer" ng-repeat="child in potentialTestParameters()">
+                        <div block type="testParameter" item="child" on-button="deleteChild({ item: child })"
+                             on-edit="editChild({ item: child })" get-status="getChildStatus({ item: child })"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="data.Type == 'UseCase'">
+                <div block type="section" item="{ title: 'Sequence', count: ' '}" on-button="$root.data['hideSequence'] = !$root.data['hideSequence']" on-edit="    $root.data['hideSequence'] "></div>
+                <div class="row animate-hide" ng-hide="$root.data['hideSequence'] ">
+                    <form class="form-horizontal">
+                        <div class="form-group top-buffer" ng-show="showInitiator" bs-tooltip="itemTooltip('Initiator')" placement="auto">
+                            <label class="control-label col-sm-2" for="itemInitiator">Initiator</label>
+                            <div class="col-sm-4">
+                                <input type=text list="initiators" class="form-control" id="itemInitiator" name="itemInitiator" ng-readonly="!$root.canEdit" placeholder="Initiator" ng-model="$root.wizardItem.Initiator">
+                                <datalist id="initiators">
+                                    <option ng-repeat="listItem in $root.data.Modules">{{listItem.Entity.Name}}</option>
+                                </datalist>
+                                <span class="error" ng-show="generalForm.itemOwner.$error.required">
+                                    Owner Required!
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row top-buffer">
+                            <input class="col-sm-offset-2 col-sm-2" type=text list="modules" id="itemModule" name="itemModule" ng-readonly="!$root.canEdit" placeholder="Module" ng-model="$root.moduleName" required
+                                   bs-tooltip="tooltip('methodModule')" placement="auto">
+                            <datalist id="modules">
+                                <option ng-repeat="listItem in $root.data.Modules">{{listItem.Entity.Name}}</option>
+                            </datalist>
+                            <span class="error" ng-show="generalForm.itemModule.$error.required">
+                                Module Required!
+                            </span>
+
+                            <input class="col-sm-offset-1 col-sm-2" type=text list="comps" id="itemComponent" name="itemComponent" ng-readonly="!$root.canEdit || !$root.moduleName" placeholder="Component" ng-model="$root.componentName" required
+                                   bs-tooltip="tooltip('methodComponent')" placement="auto">
+                            <datalist id="comps">
+                                <option ng-repeat="listItem in components()">{{listItem.Entity.Name}}</option>
+                            </datalist>
+                            <span class="error" ng-show="generalForm.itemComponent.$error.required">
+                                Component Required!
+                            </span>
+
+                            <input class="col-sm-offset-1 col-sm-2" type=text list="methods" id="itemMethod" name="itemMethod" ng-readonly="!$root.canEdit || !$root.componentName" placeholder="Method" ng-model="$root.methodName" required
+                                   bs-tooltip="tooltip('methodMethod')" placement="auto">
+                            <datalist id="methods">
+                                <option ng-repeat="listItem in methods()">{{listItem.Entity.Name}}</option>
+                            </datalist>
+                            <span class="error" ng-show="generalForm.itemMethod.$error.required">
+                                Method Required!
+                            </span>
+                        </div>
+                    </form>
+                    <form class="form-horizontal top-buffer">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="row center-block" style="text-align:center">
+                                <button class="btn btn-primary center-block col-sm-2 col-sm-offset-2" ng-click="addMethod()" ng-disabled="!$root.moduleName || !$root.componentName || !$root.methodName" id="itemAddMethod"
+                                        bs-tooltip="tooltip('sequenceAddMethod')" placement="auto">
+                                    Add Method
+                                </button>
+                                <button class="btn btn-primary center-block col-sm-2 col-sm-offset-1" ng-click="addReturn()" ng-disabled="$root.wizardItem.methods.length < 1" id="itemAddReturn"
+                                        bs-tooltip="tooltip('sequenceAddReturn')" placement="auto">
+                                    Add Return
+                                </button>
+                                <button class="btn btn-primary center-block col-sm-2 col-sm-offset-1" ng-click="addNoReturn()" ng-disabled="$root.wizardItem.methods.length < 1" id="itemAddNoReturn"
+                                        bs-tooltip="tooltip('sequenceAddNoReturn')" placement="auto">
+                                    Add No Return
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <div class="top-buffer" ng-repeat="child in $root.data.Methods">
+                            <div block type="sequenceMethod" item="child" on-button="deleteChild({ item: child })" on-add="onAdd({ item: child })" on-remove="onRemove({ item: child })"
+                                 on-edit="editChild({ Entity: child.Parent, Type: 'Component' })" get-status="getChildStatus({ item: child })" on-replace="onReplace({ item: child })">
+                            </div>
+                        </div>
+                    </div>
+
+                    <sequence data="$root.wizardItem"></sequence>
+
+                </div>
+
+                <div ng-show="$root.data.Trees.Tasks && $root.data.Trees.Tasks.length > 0" block type="collapse"
+                     item="{ title: 'Tasks', count: $root.data.Trees.Tasks.length}" on-button="hideTasks = !hideTasks" on-edit="hideTasks"></div>
+                <div class="row animate-hide" ng-hide="hideTasks">
+                    <div class="top-buffer" ng-repeat="child in $root.data.Trees.Tasks">
+                        <div block type="system" entity-type="'Tasks'" item="child.Entity" on-edit="editChild({ Entity: child.Entity, Type: 'task' })" hide-remove=" false"
+                             on-button="deleteCommonItem({ item: child })" data="{Type: 'Task'}" get-status="getChildStatus({ item: child, type: key })">
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="$root.data.Trees.Notes && $root.data.Trees.Notes.length > 0" block type="collapse"
+                     item="{ title: 'Notes', count: $root.data.Trees.Notes.length}" on-button="hideNotes = !hideNotes" on-edit="hideNotes"></div>
+                <div class="row animate-hide" ng-hide="hideNotes">
+                    <div class="top-buffer" ng-repeat="child in $root.data.Trees.Notes">
+                        <div block type="system" entity-type="'Notes'" item="child.Entity" on-edit="editChild({ Entity: child.Entity, Type: 'note' })" hide-remove=" false"
+                             on-button="deleteCommonItem({ item: child })" data="{Type: 'Note'}" get-status="getChildStatus({ item: child, type: key })">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+    </div>
+</div>
+
+
+

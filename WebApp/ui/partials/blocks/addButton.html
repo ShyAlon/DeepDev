@@ -1,0 +1,7 @@
+﻿<span ng-repeat='(key, prop) in $root.data.Children track by key'>
+    <button class="btn btn-lg btn-success" href="#" ng-disabled="$root.wizardItem.Id < 1 || !$root.canEdit" ng-click="createSubItem(key)" onclick="return false;"
+            role="button" ng-hide="key=='TestParameters'" id="{{ 'add' + key.toString() }}"
+            bs-tooltip="buttonTooltip('child', key)" placement="auto">
+        Add {{key.indexOf($root.data.Type) >-1 ? "Sub-" : ""}}{{key | limitTo: key.length-1 | ordinal}}
+    </button>
+</span>

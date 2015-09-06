@@ -1,0 +1,36 @@
+body {
+  font-family: "EuropeExt", serif;
+  font-size: 15px;
+}
+
+.ui.header {
+  font-weight: normal;
+}
+
+.ui.steps {
+  margin-bottom: 20px;
+}
+
+a.ui.step {
+  text-decoration: none;
+}
+
+.comparison.table td {
+  text-align: center;
+}
+
+.separated.segment {
+  margin: 20px 0;
+}
+
+.ui.right.aligned {
+  text-align: right;
+}
+
+.ui.table td .ui.input {
+  vertical-align: baseline;
+}
+
+.editable-wrap {
+  margin-top: 0.5em;
+}

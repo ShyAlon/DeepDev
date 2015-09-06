@@ -1,0 +1,19 @@
+﻿<div class="top-buffer" bs-tooltip="$root.tooltip('attachedItem', entityType, item)" placement="auto">
+    <div class="col-sm-offset-1 col-sm-10 well well-sm row">
+        <div class="col-sm-3" style="text-align: center">
+            <b> {{item.Name || 'Missing Name' | truncate:22}} </b>
+        </div>
+        <div class="col-sm-6">
+            {{item.Description || 'Missing Description' | truncate:120}}
+        </div>
+        <div class="col-sm-1" ng-show="hideRemove">
+
+        </div>
+        <div class="col-sm-1 col-sm-offset-1">
+            <button class="btn btn-success" ng-class="{ 'btn-danger' : !item.Result && !item.Verb, 'btn-info' : item.Result || item.Verb }" ng-click="onEdit(item)">Edit</button>
+        </div>
+        <div class="col-sm-1" ng-hide="hideRemove">
+            <button class="btn btn-danger" href="#" ng-click="onButton()" onclick="return false;" role="button">Remove</button>
+        </div>
+    </div>
+</div>

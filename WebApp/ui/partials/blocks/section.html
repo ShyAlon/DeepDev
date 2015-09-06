@@ -1,0 +1,8 @@
+﻿<div class="row" tooltip-html-unsafe="{{ item.title.slice(0, -1) + 'Description' | translate }}" tooltip-animation="true" tooltip-placement="bottom" tooltip-popup-delay="{{$root.tooltipDelay}}">
+    <div class="well well-sm" style="margin-bottom: 0; margin-top: 14px;">
+        <h4 ng-click="onButton()">
+            {{item.title | ordinal}}
+            <i ng-hide="$root.hideIcons" class="pull-right " ng-class="{'fa fa-expand fa-2x': onEdit(), 'fa fa-compress': !onEdit()}"></i>
+        </h4>
+    </div>
+</div>

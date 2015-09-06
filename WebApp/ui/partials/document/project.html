@@ -1,0 +1,222 @@
+﻿<div class="text-center" ng-if="$root.loading">
+    <i class="fa fa-cog fa-spin fa-5x"></i><H1>Loading... Press CTRL-L to restore bar</H1><i class="fa fa-cog fa-spin fa-5x"></i>
+</div>
+<div ng-if="!$root.loading">
+    
+        <div>
+            <h1 style="text-align:center">{{$root.documentTitle | ordinal}} </h1>
+            <br />
+            <h1 style="text-align:center" ng-hide="$root.passiveHeaders"><a ng-href="#/Edit/:project/:-1/:{{$root.data.Entity.Id}}">{{$root.data.Entity.Name | ordinal}}</a></h1>
+            <h1 style="text-align:center" ng-show="$root.passiveHeaders">{{$root.data.Entity.Name | ordinal}} </h1>
+            <br />
+            <h2 style="text-align:center">Version {{$root.documentVersion}}</h2>
+            <h3 style="text-align:center">Author: {{$root.documentAuthor}}</h3>
+            <h3 style="text-align:center">Date: {{$root.documentTime}}</h3>
+            <br />
+
+            <p style="page-break-after:always;"></p>
+
+            <h2 ng-show="headers" class="document">Table of Content</h2>
+            <div class="" ng-repeat="header in headers">
+                <span ng-repeat="counter in getRepeat(header.depth) track by $index" style="padding: 0px; margin:0px;">
+                    . .
+                </span>
+                <a scroll-to="{{header.id}}" offset="42">{{header.text}}</a>
+            </div>
+            <p style="page-break-after:always;"></p>
+
+            <p ng-show="data.Entity.RiskType && data.Entity.RiskType != 'None'"><b>Risk Level: </b>{{data.Entity.RiskType}}</p>
+            <p ng-show="data.Entity.RiskType && data.Entity.RiskType != 'None'"><b>Risk Status: </b>{{data.Entity.RiskStatus}}</p>
+            <p ng-style="{ 'color':issue.color }" ng-show="data.Entity.Status"><b>Status: {{data.Entity.Status}}</b></p>
+            <p ng-show="data.Entity.CreatedTime"><b>Created Time: </b>{{data.Entity.CreatedTime}}</p>
+            <p ng-show="data.Entity.ClosedTime && data.Entity.ClosedTime.substring(0, 4) != '9999'"><b>Closed Time: </b>{{data.Entity.ClosedTime}}</p>
+            <!-- ng-show="data.Entity.Deadline"><b>Deadline: </b>{{data.Entity.Deadline | truncate:11:' '}}</p-->
+            <p ng-show="data.Entity.Result"><b>Expected result: </b>{{data.Entity.Result}}</p>
+            <h1 class="document">{{data.Type | ordinal}}</h1>
+            <p ng-show="data.Entity.Description" ng-bind-html="data.Entity.Description"></p>
+
+            <div ng-show="data.Metadata.ProcessModules">
+                <content-item item='{
+                Type: "Process Modules" ,
+                Entity: {Name: "Process Modules" } ,
+                count: 4,
+                size:2
+            }'
+                                on-button="data['hideProcessModules'] = !data['hideProcessModules']"
+                                on-edit="data['hideProcessModules']">
+
+                </content-item>
+                <div class="animate-hide" ng-hide="data['hideProcessModules'] ">
+                    <div class="document" ng-repeat='(key, prop) in data.Metadata.ProcessModules track by key'>
+                        <ul class="document">
+                            <li>
+                                <b>{{data.Metadata.ProcessModules[key].Name}}</b>
+                                <ul class="document" ng-repeat='(mkey, mprop) in data.Metadata.ProcessModules[key].Children track by mkey'>
+                                    <li>{{mkey}}</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="data.Metadata.ProcessConnections">
+                <content-item item='{
+                Type: "Process Interaction" ,
+                Entity: {Name: "Process Interaction" } ,
+                count: 4,
+                size:2
+            }'
+                                on-button="data['hideProcessInteraction'] = !data['hideProcessInteraction']"
+                                on-edit="data['hideProcessInteraction']">
+
+                </content-item>
+                <div class="animate-hide box" ng-hide="data['hideProcessInteraction']">
+                    <pairs item='{
+                Type: "Process Interaction" ,
+                Entity: {Name: "Process Interaction" } ,
+                count: 4,
+                size:2,
+                collection: data.Metadata.ProcessConnections
+            }'>
+
+                    </pairs>
+                </div>
+            </div>
+
+            <div ng-show="data.Metadata.ModuleConnections">
+                <content-item item='{
+                Type: "Module Interaction" ,
+                Entity: {Name: "Module Interaction" } ,
+                count: 4,
+                size:2
+            }'
+                                on-button="data['hideModuleInteraction'] = !data['hideModuleInteraction']"
+                                on-edit="data['hideModuleInteraction']">
+
+                </content-item>
+                <div class="animate-hide" ng-hide="data['hideModuleInteraction'] ">
+                    <pairs item='{
+                Type: "Module Interaction" ,
+                Entity: {Name: "Module Interaction" } ,
+                count: 4,
+                size:2,
+                collection: data.Metadata.ModuleConnections
+            }'>
+
+                    </pairs>
+                </div>
+            </div>
+            <div class="" ng-repeat="(key, value) in $root.data.Properties">
+                <div>
+                    <content-item item='{
+                Type: key ,
+                count: 4,
+                size:2
+            }'
+                                    on-button="data['hideProperty' + key] = !data['hideProperty' + key]"
+                                    on-edit="data['hideProperty' + key]" ng-if="$root.keys($root.data.Properties[key]).length > 0">
+                    </content-item>
+                    <div class="animate-hide" ng-hide="data['hideProperty' + key] ">
+                        <div class="" ng-repeat="(gkey, gvalue) in $root.data.Properties[key]">
+                            <div ng-if="$root.keySum($root.data.Properties[key][gkey]) > 0">
+                                <content-item item='{
+                Type: gkey ,
+                count: 4,
+                size:3
+            }' on-button="data['hideProperty' + key + gkey] = !data['hideProperty' + key + gkey]"
+                                                on-edit="data['hideProperty' + key + gkey]">
+                                </content-item>
+                                <div class="animate-hide" ng-hide="data['hideProperty' + key + gkey] ">
+                                    <div class="row" ng-repeat="(fkey, fvalue) in $root.data.Properties[key][gkey]" ng-show="fvalue">
+                                        <div class="col-sm-2">
+                                            {{fkey | ordinal}}:
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <pre style="padding: 0;">{{fvalue}}</pre>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <strong>Total (optimistic):</strong>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <pre style="padding: 0;">{{$root.keySum($root.data.Properties[key][gkey])}}</pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="page-break-after:always;"></p>
+        </div>
+    </div>
+
+
+
+
+        <div class="modal" id="docuementAttributesModal" fade-in>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Document Attributes</h3>
+                    </div>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4 " for="icons">Hide Icons</label>
+                            <div class="col-sm-6">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="icons" ng-model="$root.hideIcons">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4 " for="headers">Passive Headers</label>
+                            <div class="col-sm-6">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="headers" ng-model="$root.passiveHeaders">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4 " for="document_title">Document Title</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ng-model="$root.documentTitle" id=" document_title" placeholder="Title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4 " for="document_version">Document Version</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ng-model="$root.documentVersion" id="document_version" placeholder="Version">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4 " for="document_author">Document Author</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ng-model="$root.documentAuthor" id="document_author" placeholder="Author">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4 " for="document_time">Document Time</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" ng-model="$root.documentTime" id="document_time" placeholder="Time">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <a class="btn btn-primary" data-dismiss="modal">
+                                    <i class="glyphicon glyphicon-floppy-save glyphicon-white"></i> Close
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>

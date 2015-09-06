@@ -1,0 +1,14 @@
+﻿<div>
+    <div class="span2 offset3" style="padding-top: 5px;">
+        {{item.Parameter.Name || item.Entity.Name || 'Missing Name' | truncate:20}}
+    </div>
+    <div class="span1">
+        <input type="text" id="name" name="itemName" ng-readonly="!$root.canEdit" placeholder="Value" ng-model="item.Entity.Value" ng-show="item.included" required>
+    </div>
+    <div class="span1 offset3">
+        <button class="btn btn-lg btn-info" ng-show="!item.included" ng-click="onEdit(item)" onclick="return false;">Add</button>
+    </div>
+    <div class="span1 offset3">
+        <button class="btn btn-lg btn-inverse" ng-show="item.included" href="#" ng-click="onButton(item)" onclick="return false;">Remove</button>
+    </div>
+</div>

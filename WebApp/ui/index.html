@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>DeepDev</title>
+    <link REL="SHORTCUT ICON" HREF="favicon.png">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/vendor/bootstrap/bootstrap.min.css">
+    <link href="js/vendor/angularIntro/introjs.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/vendor/ng-grid/ng-grid.css">
+    <link href="css/vendor/textAngular/textAngular.css" rel="stylesheet" />
+    <link href="js/vendor/tree/angular-ui-tree.min.css" rel="stylesheet" />
+    <!-- TODO needed? -->
+    <link rel="stylesheet" href="js/vendor/loading-bar/loading-bar.css" />
+    <!-- <link rel="stylesheet" href="css/vendor/animate/animate.css"> -->
+
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+
+    <script src="js/vendor/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+
+</head>
+
+<body ng-app="deepDev" flow-init="{testchunks:false}">
+
+    <!--[if lt IE 7]>
+    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="//browsehappy.com/">upgrade
+        your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to
+        improve your experience.</p>
+    <![endif]-->
+    <!-- bootstrap navbar -->
+    <div ng-include="'partials/navbar-top.html'" ng-if="!$root.hide"></div>
+    <div class="container-fluid" style="padding-left: 15px; padding-right: 15px;">
+        <div class="row" style="height:55px" ng-if="!$root.hide"></div>
+        <div class="row">
+            <div ng-include="'partials/sidebar.html'" class="col-md-2" ng-if="!$root.hide" style="padding: 0; "></div>
+            <div ng-view class="col-md-8" style="padding: 0;" ng-class="{ 'col-md-12' : $root && $root.hide }" ></div>
+            <div ng-include="'partials/rightbar.html'" class="col-md-2" ng-if="!$root.hide" style="padding: 0;"></div>
+        </div>
+        <div class="row" style="height:75px;" ng-if="!$root.hide"></div>
+    </div>
+    <!-- footer -->
+    <div ng-include="'partials/navbar-bottom.html'" ng-if="!$root.hide"></div>
+
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script>window.jQuery || document.write('<script src="//code.jquery.com/jquery-2.1.3.min.js"><\/script>')</script>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.2.0/angular-strap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-strap/2.2.0/angular-strap.tpl.min.js"></script>
+    <script src="js/vendor/ng-grid/ng-grid.js"></script>
+    <script src="js/vendor/textAngular/textAngular-rangy.min.js"></script>
+    <script src="js/vendor/textAngular/textAngularSetup.min.js"></script>
+    <script src="js/vendor/textAngular/textAngular.min.js"></script>
+    <script src="js/vendor/textAngular/textAngular-sanitize.min.js"></script>
+    <script src="js/vendor/angularIntro/intro.min.js"></script>
+    <script src="js/vendor/angularIntro/angular-intro.min.js"></script>
+    <script src="js/vendor/translate/angular-translate.min.js"></script>
+    <script src="js/vendor/translate/en-us.js"></script>
+    <script src="js/vendor/loading-bar/loading-bar.js"></script>
+    <script src="js/vendor/Search/angular-advanced-searchbox.js"></script>
+    <script src="js/vendor/flow/ng-flow-standalone.js"></script>
+    <link href="js/vendor/gantt/dhtmlxgantt.css" rel="stylesheet" />
+    <script src="js/vendor/gantt/dhtmlxgantt.js"></script>
+    <!-- PDF Output
+
+    <script src="js/vendor/pdf/rasterizeHTML.allinone.js"></script>
+    <script src="js/vendor/pdf/jspdf.min.js"></script>
+
+     -->
+    <!--  TODO compile/optimise these during build -->
+    <script src="js/app.min.js"></script>
+    <script src="js/services/services.min.js"></script>
+    <script src="js/services/Local.min.js"></script>
+    <script src="js/services/Server.min.js"></script>
+    <script src="js/services/UI.min.js"></script>
+    <script src="js/services/authentication.min.js"></script>
+    <script src="js/filters/filters.min.js"></script>
+    <script src="js/directives/fadeInDirective.min.js"></script>
+    <script src="js/directives/directives.min.js"></script>
+    <script src="js/directives/stopEventDirective.min.js"></script>
+    <script src="js/Controllers/entityCtrl.min.js"></script>
+    <script src="js/Controllers/searchCtrl.min.js"></script>
+    <script src="js/Controllers/homeCtrl.min.js"></script>
+    <script src="js/Controllers/AccountCtrl.min.js"></script>
+    <script src="js/Controllers/documentCtrl.min.js"></script>
+</body>
+</html>

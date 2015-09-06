@@ -1,0 +1,22 @@
+﻿<div class="span12 top-buffer">
+    <div class="row-fluid">
+        <div class="span2 offset2">
+            <input type=text list=names ng-readonly="!$root.canEdit"  placeholder="name" ng-model="item.Name">
+            <datalist id=names>
+                <option ng-repeat="name in $root.parameterNames">{{name}}</option>
+            </datalist>
+        </div>
+        <div class="span2 offset1">
+            <input type=text ng-readonly="!$root.canEdit"  placeholder="description" ng-model="item.Description">
+        </div>
+        <div class="span2 offset1">
+            <input type=text list="types" ng-readonly="!$root.canEdit"  placeholder="type" ng-model="item.Type">
+            <datalist id="types">
+                <option ng-repeat="type in $root.parameterTypes">{{type}}</option>
+            </datalist>
+        </div>
+        <div class="span1 offset1">
+            <button class="btn btn-lg btn-danger" href="#" ng-click="onButton()" onclick="return false;" role="button">Remove</button>
+        </div>
+    </div>
+</div>

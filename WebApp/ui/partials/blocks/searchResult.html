@@ -1,0 +1,10 @@
+﻿<div class="col-sm-6 top-buffer nopadding" bs-tooltip="$root.tooltip('itemSystemBlock', null, item)" placement="auto">
+    <div class="panel panel-default" style="margin:10px;" ng-click="onEdit(item)">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{item.Name | truncate:60}}</h3>
+        </div>
+        <div class="panel-body">
+            <h4 class="nopadding top-buffer">{{item.Description | truncate:76}}</h4>
+        </div>
+    </div>
+</div>

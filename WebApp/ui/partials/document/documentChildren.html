@@ -1,0 +1,59 @@
+﻿<div ng-show="data.Entity && !data.hideBlock">
+    <p ng-show="data.Entity.Process"><b>Process: </b>{{data.Entity.Process}}</p>
+    <p ng-show="data.Entity.Description" ng-bind-html="data.Entity.Description">
+</div>
+<div ng-if="data.Trees.Notes">
+    <div ng-repeat="child in data.Trees.Notes">
+        <div ng-if="child.Entity.DisplayAtTop">
+            <content-item item='child' on-button="child.hide = !child.hide" on-edit="child.hide" header="3">
+            </content-item>
+            <div class="animate-hide" ng-hide="child.hide">
+                <document-children data="child" type="Note">
+
+                </document-children>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-if="data.Trees.Tasks">
+    <div ng-repeat="child in data.Trees.Tasks">
+        <content-item item='child' on-button="child.hide = !child.hide" on-edit="child.hide" header="3">
+        </content-item>
+        <div class="animate-hide" ng-hide="child.hide">
+            <document-children data="child" type="Task">
+
+            </document-children>
+        </div>
+    </div>
+</div>
+
+<div class="document" ng-repeat='(key, prop) in data.Children track by key'>
+    <content-item ng-show="data.Children[key].length > 0" item='{ Type: key, Entity: {Name: key.indexOf(data.Type) > -1 ? "Sub-"+key : key} , count: 4, size:header+1}'
+                  on-button="data['hide' + key] = !data['hide' + key]" on-edit="data['hide' + key]" '></content-item>
+    <div class="animate-hide" ng-hide="data['hide'+key] ">
+        <div ng-repeat="child in data.Children[key]">
+            <content-item item='child' on-button="child.hide = !child.hide" on-edit="child.hide">
+            </content-item>
+            <div class="animate-hide" ng-hide="child.hide">
+                <document-children data="child" header="header+1" type="child.Type">
+
+                </document-children>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-if="data.Trees.Notes">
+    <div ng-repeat="child in data.Trees.Notes">
+        <div ng-if="!child.Entity.DisplayAtTop">
+            <content-item item='child' on-button="child.hide = !child.hide" on-edit="child.hide" header="3">
+            </content-item>
+            <div class="animate-hide" ng-hide="child.hide">
+                <document-children data="child" type="Note">
+
+                </document-children>
+            </div>
+        </div>
+    </div>
+</div>

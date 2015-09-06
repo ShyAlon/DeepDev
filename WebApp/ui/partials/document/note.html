@@ -1,0 +1,18 @@
+﻿<p ng-if="data.Entity.Description" ng-bind-html="data.Entity.Description">
+
+</p>
+<div ng-if="data.Entity.Image">
+    <img ng-src="{{'data:image/gif;base64,' + data.Entity.Image}}" style="max-width: 100%;" />
+</div>
+<div ng-if="data.Children">
+    <div ng-repeat="child in data.Children">
+        <content-item item='child'
+                      on-button="child.hide = !child.hide" on-edit="child.hide"></content-item>
+        <div class="animate-hide" ng-hide="child.hide">
+
+            <document-children data="child" type="Note">
+
+            </document-children>
+        </div>
+    </div>
+</div>

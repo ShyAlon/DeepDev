@@ -1,0 +1,18 @@
+﻿<div class="col-sm-6 top-buffer nopadding" bs-tooltip="$root.tooltip('itemSystemBlock', null, item)" placement="auto">
+    <div class="panel panel-default" style="margin:10px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{item.Name | truncate:30}}<button type="close" class="close nopadding" ng-click="onButton(item)">X</button></h3>
+        </div>
+        <div class="panel-body" ng-click="onEdit(item)">
+            <h5 class="nopadding top-buffer" >{{item.Description | htmlToPlaintext | truncate:96 }}</h5>
+            <div class="top-buffer" style="text-align: center;">
+                <span class="label" ng-class="getStatus(item).shy">{{getStatus(item).text | ordinal}}</span>
+            </div>
+        </div>
+        <div class="panel-footer" ng-click="onEdit(item)">
+            <div class="nopadding" style="text-align: center;">
+                <button class="btn btn-info" ng-click="onEdit(item)">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿<div class="animate-hide" ng-hide="item.hide" style="padding-bottom: 30px;">
+        <style>
+            svg {
+                width: 100%;
+                border: 1px solid white;
+                box-sizing: border-box;
+            }
+        </style>
+    <div ng-cloak ng-style="{height:item.collection.length*30+30}">
+        <svg version="1.1" vbox="0 0 1280 {{item.collection.length*30+30 || 100}}" style="height:inherit">
+            <desc>Hand drawn data.Entity diagram</desc>
+            <g stroke="black" font-family="Arial" text-anchor="middle">
+                <!-- draw user boxes and the vertical lines -->
+                <g ng-repeat="user in item.collection" ng-attr-transform="translate({{user.x}}, {{user.y}})" font-size="16">
+                    <text x="30" ng-attr-y="{{$index*30+25}}" stroke-width="0.5" dominant-baseline="middle" text-anchor="start">{{user.Source.Name}}</text>
+                    <polyline ng-attr-points="240,{{$index*30+25}}, 310,{{$index*30+25}}" style="fill:none;stroke:black;stroke-width:3" />
+                    <polyline ng-attr-points="260,{{$index*30+15}}, 240,{{$index*30+25}}, 260,{{$index*30+35}}" style="fill:none;stroke:black;stroke-width:3" />
+
+                    <text x="400" ng-attr-y="{{$index*30+25}}" stroke-width="0.5" dominant-baseline="middle" text-anchor="center">{{user.CallTypeName | ordinal}}</text>
+                    <polyline ng-attr-points="480,{{$index*30+25}}, 560,{{$index*30+25}}" style="fill:none;stroke:black;stroke-width:3" />
+                    <polyline ng-attr-points="540,{{$index*30+15}}, 560,{{$index*30+25}}, 540,{{$index*30+35}}" style="fill:none;stroke:black;stroke-width:3" />
+
+                    <text x="640" ng-attr-y="{{$index*30+25}}" stroke-width="0.5" dominant-baseline="middle" text-anchor="start">{{user.Target.Name}}</text>
+                </g>
+            </g>
+        </svg>
+    </div>
+</div>

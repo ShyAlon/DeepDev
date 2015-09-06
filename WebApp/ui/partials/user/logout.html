@@ -1,0 +1,20 @@
+<div fade-in ng-intro-options="IntroOptions" ng-intro-method="startTour"
+     ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+     ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+     ng-intro-onafterchange="AfterChangeEvent" ng-intro-autorefresh="true"
+     ng-intro-autostart="ShouldAutoStart()">
+    <div class="well">
+        <form novalidate class="container css-form" name="login">
+            <h1>Why would you log out?</h1>
+            <p>There is so much to do</p>
+            <div style="padding-top: 1em;" class="container form-row">
+                <button class="btn btn-primary" ng-disabled="login.$invalid" ng-click="executeLogout()">Log Out</button>&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" href="#/home">Home</button>
+            </div>
+        </form>
+        <div style="padding-top: 1em;" class="container form-row">
+            <p></p>
+            <p></p>
+        </div>
+    </div>
+</div>

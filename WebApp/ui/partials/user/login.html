@@ -1,0 +1,42 @@
+<div fade-in ng-intro-options="IntroOptions" ng-intro-method="startTour"
+     ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+     ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+     ng-intro-onafterchange="AfterChangeEvent" ng-intro-autorefresh="true"
+     ng-intro-autostart="ShouldAutoStart()">
+    <div class="well" ng-if="!$root.userId">
+        <form novalidate class="container css-form" name="login">
+            <!--div class="container form-row">
+                Name:&nbsp;&nbsp;&nbsp;<input class="form-control" type="text" ng-model="user.Name" required />
+            </div-->
+            <div class="container form-row">
+                E-mail:&nbsp;&nbsp;&nbsp;<input class="form-control" type="email" ng-model="user.Email" required id="userEMail" />
+            </div>
+            <div class="container form-row">
+                Password:&nbsp;&nbsp;&nbsp;<input class="form-control" type="password" ng-model="user.Password" required id="userPassword" /><br />
+            </div>
+            <div style="padding-top: 1em;" class="container form-row">
+                <button class="btn btn-primary" ng-disabled="login.$invalid" ng-click="executeLogin()">Login</button>&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" ng-click="user.Email = '';user.Password = '';">Clear</button>
+                <a class="btn btn-primary" href="#/signup">Sign up</a>
+                <a class="btn btn-primary" href="#/reset-password">Reset password</a>
+            </div>
+        </form>
+        <div style="padding-top: 1em;" class="container form-row">
+            <p></p>
+            <p></p>
+        </div>
+        <div class="alert alert-danger" role="alert" ng-show="message">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{message}}
+        </div>
+    </div>
+    <div class="well" ng-if="$root.userId">
+        You really kinda already logged in<a class="btn btn-primary" href="#/home">Back Home</a>
+    </div>
+</div>
+
+
+
+
+

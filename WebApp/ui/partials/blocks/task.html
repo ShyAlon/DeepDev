@@ -1,0 +1,25 @@
+﻿<div class="col-sm-6 top-buffer nopadding" bs-tooltip="$root.tooltip('itemSystemBlock', null, item)" placement="auto">
+    <div class="panel panel-default" style="margin:10px;" ng-click="onEdit(item)">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{item.Name | truncate:60}}<button type="close" class="close nopadding" ng-click="onButton(item)">X</button></h3>
+        </div>
+        <div class="panel-body">
+            <h4 class="nopadding top-buffer" style="min-height:36px">{{item.Description | truncate:128}}</h4>
+            <div class="row">
+                <h4 class="nopadding top-buffer col-sm-5 col-sm-offset-1">Priority: {{item.Priority}}</h4>
+                <h4 class="nopadding top-buffer col-sm-5">Status: {{item.Status}}</h4>
+            </div>
+            <div class="row">
+                <h4 class="nopadding top-buffer col-sm-5 col-sm-offset-1">Risk: {{item.RiskType | ordinal}}</h4>
+                <h4 class="nopadding top-buffer col-sm-5">Risk Status: {{item.RiskStatus | ordinal}}</h4>
+            </div>
+            <h4 class="nopadding top-buffer" ng-show="data.Container">Execution: {{data.Container.Type}} {{data.Container.Entity.Name}}</h4>
+            <h4 class="nopadding top-buffer" ng-hide="data.Container">Execution not set</h4>
+        </div>
+        <div class="panel-footer" ng-click="onEdit(item)">
+            <div class="nopadding" style="text-align: center;">
+                Edit Task
+            </div>
+        </div>
+    </div>
+</div>

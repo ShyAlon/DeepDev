@@ -1,0 +1,30 @@
+<div fade-in ng-intro-options="IntroOptions" ng-intro-method="startTour"
+     ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+     ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+     ng-intro-onafterchange="AfterChangeEvent" ng-intro-autorefresh="true"
+     ng-intro-autostart="ShouldAutoStart()">
+    <div class="well" ng-if="$root.userId">
+        <form novalidate class="container css-form" name="login">
+            <div class="container form-row">
+                Name:&nbsp;&nbsp;&nbsp;<input class="form-control" type="text" ng-model="user.Name" required id="userName" />
+            </div>
+            <div class="container form-row">
+                E-mail:&nbsp;&nbsp;&nbsp;<input class="form-control" type="email" ng-model="user.Email" required id="userEMail" />
+            </div>
+            <div class="container form-row">
+                Organization:&nbsp;&nbsp;&nbsp;<input class="form-control" type="text" ng-model="user.Organization" required id="userOrganization" />
+            </div><br />
+            <div style="padding-top: 1em;" class="container form-row">
+                <button class="btn btn-primary" ng-disabled="login.$invalid" ng-click="executeUpdate(user)">Update</button>&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" ng-click="user = {};">Reset</button>
+            </div>
+        </form>
+        <div style="padding-top: 1em;" class="container form-row">
+            <p></p>
+            <p></p>
+        </div>
+    </div>
+    <div class="well" ng-if="!$root.userId">
+        You really shouldn't be here <a class="btn btn-primary" href="#/home">Back Home</a>
+    </div>
+</div>

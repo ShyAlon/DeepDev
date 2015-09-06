@@ -1,0 +1,90 @@
+<div class="container" fade-in>
+    <div style="padding-top: 2em;" ng-hide="$root.userName">
+        <div class="jumbotron">
+            <div style="padding-bottom: 1em;" class="pull-right">
+                <span>
+                    <img src="favicon-2.png">
+                </span>
+            </div>
+            <div class="page-header">
+                <h1>DeepDev</h1>
+                <h2>System's Engineering Made Easy</h2>
+            </div>
+            <div>
+                <p>{{'DeepDevDescription' | translate}}</p>
+            </div>
+            <div>
+                <p>{{'InitialiInstructions' | translate}}</p>
+            </div>
+            <a class="btn btn-primary" href="#/process">Please walk me through the process</a>
+            <a class="btn btn-primary" href="#/login" ng-hide="$root.userName">Login to Start</a>
+            <button class="btn btn-primary" href="#" ng-click="$root.createProject()" onclick="return false;" role="button" id="createNewProjectButton" ng-show="$root.userName"
+                    bs-tooltip="buttonTooltip('createProject')" placement="auto">
+                {{'createProject' | translate}}
+            </button>
+        </div>
+    </div>
+    <div ng-show="$root.userName">
+        <h1>Hello {{$root.userName}}</h1>
+        <div block type="section" item="{ title: 'Import Project', count: ' '}" on-button="$root.data['hideImport'] = !$root.data['hideImport']" on-edit="    $root.data['hideImport' ] "></div>
+        <div class="row animate-hide" ng-hide="$root.data['hideImport'] ">
+            <div flow-prevent-drop
+                 flow-drag-enter="style={border: '5px solid green', width:'100%'}"
+                 flow-drag-leave="style={width:'100%'}"
+                 ng-class="($flow.files.length < 1) && class"
+                 ng-style="style">
+
+                <div class="row" flow-drop flow-drop-enabled="$flow.files.length < 1"
+                     ng-class="class">
+                    <h4 style="text-align:center">Drop a project zip file here to import it (it will overwrite changes in existing projects)</h4>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-primary center-block col-sm-2 form-control" ng-click="importProject()" ng-disabled="$flow.files.length == 0">Import Project</button>
+            </div>
+        </div>
+
+        
+        <div ng-if="$root.data">
+            <div ng-show="$root.keys($root.data.Metadata).length < 2">
+                <div class="jumbotron">
+                    <div style="padding-bottom: 1em;" class="pull-right">
+                        <span>
+                            <img src="favicon-2.png">
+                        </span>
+                    </div>
+                    <div class="page-header">
+                        <h1>DeepDev</h1>
+                        <h2>System's Engineering Made Easy</h2>
+                    </div>
+                    <div>
+                        <p>{{'DeepDevDescription' | translate}}</p>
+                    </div>
+                    <div>
+                        <p>{{'InitialiInstructions' | translate}}</p>
+                    </div>
+                    <a class="btn btn-primary" href="#/process">Please walk me through the process</a>
+                    <a class="btn btn-primary" href="#/login" ng-hide="$root.userName">Login to Start</a>
+                    <button class="btn btn-primary" href="#" ng-click="$root.createProject()" onclick="return false;" role="button" id="createNewProjectButton" ng-show="$root.userName"
+                            bs-tooltip="buttonTooltip('createProject')" placement="auto">
+                        {{'createProject' | translate}}
+                    </button>
+                </div>
+            </div>
+
+            
+        </div>
+        
+        <div ng-repeat='(key, prop) in $root.data.Metadata track by key'>
+            <div ng-if="key.indexOf('Task') != -1">
+                <div block type="collapse" item="{ title: key, count: $root.data.Metadata[key].length}" on-button="$root.data['hide' + key] = !$root.data['hide' + key]" on-edit="$root.data['hide' + key] "></div>
+                <div class="row animate-hide" ng-hide="$root.data['hide'+key] ">
+                    <div ng-repeat="child in $root.data.Metadata[key]">
+                        <div block type="task" entity-type="key" data="child" item="child.Entity" on-button="deleteChild({ item: child, type: key })"
+                             on-edit="editChild(child)" get-status="getChildStatus({ item: child, type: key })"></div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>

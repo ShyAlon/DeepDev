@@ -1,0 +1,27 @@
+﻿<div class="container" fade-in
+     ng-intro-options="IntroOptions" ng-intro-method="startTour"
+     ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+     ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+     ng-intro-onafterchange="AfterChangeEvent" ng-intro-autorefresh="true"
+     ng-intro-autostart="ShouldAutoStart()">
+    <div class="row">
+        <div class="col-sm-10">
+            <nit-advanced-searchbox ng-model="searchParams" go-search="searchRequest" parameters="availableSearchParams" placeholder="Search..." class="top-buffer"></nit-advanced-searchbox>
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-primary form-control top-buffer" ng-click="searchRequest()" ng-disabled="hasNoKeys(searchParams)">Go Search!</button>
+        </div>
+    </div>
+    <div ng-repeat='(key, prop) in $root.searchResults track by key'>
+        <div block type="collapse" item="{ title: key, count: $root.searchResults[key].length}" on-button="$root.data['hide' + key] = !$root.data['hide' + key]" on-edit="$root.data['hide' + key] "></div>
+            <div class="row animate-hide" ng-hide="$root.data['hide'+key] ">
+                <div ng-repeat="child in $root.searchResults[key]">
+                    <div block type="searchResult" entity-type="key" item="child" on-button="deleteChild({ item: child, type: key })"
+                         on-edit="editChild({ Entity: child, Type: child.Type })" get-status="getChildStatus({ item: child, type: key })"></div>
+                </div>
+            </div>
+    </div>  
+</div>
+
+
+

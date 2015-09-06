@@ -1,0 +1,56 @@
+<!-- Sidebar -->
+<div id="rightbar-audit" ng-if="$root.wizardItem" bs-tooltip="$root.tooltip('auditBlock')" placement="auto" >
+    <div class="panel panel-primary">
+        <div class="panel-heading panel-info" style="text-align: center;">
+            Audit for {{$root.wizardItem.Name}}
+        </div>
+        <!--div class="panel-body">
+        </div-->
+        <ul class="list-group side-panel">
+            <li class="list-group-item"><b>Created by: </b>{{$root.data.Creator}}</li>
+            <li class="list-group-item"><b>Created at: </b>{{$root.wizardItem.Created | date:'medium' }}</li>
+            <li class="list-group-item"><b>Modified by: </b>{{$root.data.LastModifier}}</li>
+            <li class="list-group-item"><b>Modified at: </b>{{$root.wizardItem.Modified | date:'medium' }}</li>
+        </ul>
+        <div class="panel-footer " style="text-align: center;">Audit</div>
+    </div>
+</div>
+<div id="rightbar-tags" ng-if="$root.wizardItem" bs-tooltip="$root.tooltip('tagsBlock')" placement="auto">
+    <div class="panel panel-primary">
+        <div class="panel-heading panel-info" style="text-align: center;">
+            Tags
+        </div>
+        <div class="panel-body">
+            <div class="form-group ">
+                <div class="col-sm-8" style="padding-left: 0">
+                    <input type="text" class="form-control" id="itemNewTag" name="itemNewTag" placeholder="Name" ng-model="$root.newTag">
+                </div>
+                <div class="col-sm-4" style="padding: 0">
+                    <button class="btn btn-primary center-block form-control" ng-disabled="$root.disableNewTag()" ng-click="$root.addTag($root.newTag)">Add Tag</button>
+                </div>
+            </div>
+            <div class="row">
+                <span class="col-sm-4 label label-primary " ng-repeat="tag in $root.data.Metadata.Tags" style="border-style: outset; font-size:larger" ng-click="$root.newTag=tag.Name" ng-hide="tag.Deleted">
+                    {{tag.Name | truncate:7}}<button type="close" class="close " ng-click="$root.removeTag(tag)">&times;</button>
+                </span>
+            </div>
+        </div>
+        <div class="panel-footer " style="text-align: center;">
+            <button class="btn btn-primary center-block form-control" ng-click="$root.saveTags()">Save Tags</button>
+        </div>
+    </div>
+</div>
+<div id="rightbar-session" ng-if="$root.wizardItem" bs-tooltip="$root.tooltip('sessionBlock')" placement="auto">
+    <div class="panel panel-primary">
+        <div class="panel-heading panel-info" style="text-align: center;">
+            Session
+        </div>
+        <!--div class="panel-body">
+        </div-->
+        <ul class="list-group side-panel">
+            <li class="list-group-item"><b>Entity Read: </b>{{$root.entityRead | date:'medium'}}</li>
+            <li class="list-group-item"><b>Login Time: </b>{{$root.loginTime | date:'medium'}}</li>
+        </ul>
+        <div class="panel-footer " style="text-align: center;">Session</div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿<div class="top-buffer">
+    <form name="generalForm" class="row form-horizontal top-buffer" style="border-style: groove; padding: 12px; margin-left: 30px;">
+        <div class="row-fluid">
+            <div class="span3" ng-style="{ 'color':data.Entity.color }">
+                <b>Status: </b>{{data.Entity.Status}}
+            </div>
+            <div class="span9">
+                <b>Description: </b>{{data.Entity.Description}}
+            </div>
+        </div>
+        <br />
+        <div class="row-fluid">
+            <div class="span3">
+                <b>Created: </b>{{data.Entity.Created}}
+            </div>
+            <div class="span3">
+                <b>Modified: </b>{{data.Entity.Modified}}
+            </div>
+            <div class="span3">
+                <b>Created By: </b>{{data.CreatedBy}}
+            </div>
+            <div class="span3">
+                <b>Modified By: </b>{{data.ModifiedBy}}
+            </div>
+        </div>
+        <br />
+        <div class="row-fluid">
+            <div class="span3">
+                <b>Priority: </b>{{data.Entity.Priority}}
+            </div> 
+            <div class="span3" ng-style="{ 'color':data.Entity.effortColor }">
+                <b>Effort: </b>{{data.Entity.Effort}}
+            </div>
+            <div class="span3" ng-style="{ 'color':data.Entity.effortColor }">
+                <b>Effort Estimation: </b>{{data.Entity.EffortEstimation}}
+            </div>
+            <div class="span3">
+                
+            </div>
+        </div>
+        <br />
+    </form>
+</div>
+
+<div class="document" ng-repeat='(key, prop) in data.Children track by key'>
+    <content-item ng-show="data.Children[key].length > 0" item='{ Type: key, Entity: {Name: key.indexOf(data.Type) > -1 ? "Sub-"+key : key} , count: 4, size:header+1}'
+                  on-button="data['hide' + key] = !data['hide' + key]" on-edit="data['hide' + key]" '></content-item>
+    <div class="animate-hide" ng-hide="data['hide'+key] ">
+        <div ng-repeat="child in data.Children[key]">
+            <content-item item='child' on-button="child.hide = !child.hide" on-edit="child.hide">
+            </content-item>
+            <div class="animate-hide" ng-hide="child.hide">
+                <document-children data="child" header="header+1" type="child.Type">
+
+                </document-children>
+            </div>
+        </div>
+    </div>
+</div>
+

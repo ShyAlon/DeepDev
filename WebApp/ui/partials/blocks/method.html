@@ -1,0 +1,46 @@
+﻿<div class="col-sm-12 top-buffer well" tooltip-html-unsafe="{{ 'MethodDescription' | translate:{ data: $root.wizardItem} }}" tooltip-animation="true" tooltip-placement="auto" tooltip-popup-delay="{{$root.tooltipDelay}}">
+    <div class="row">
+        <div class="col-sm-3">
+            <input class="form-control" type=text ng-readonly="!$root.canEdit" placeholder="return value" ng-model="item.Return">
+        </div>
+        <div class="col-sm-3">
+            <input class="form-control" type=text list="missing" ng-readonly="!$root.canEdit" placeholder="Name" ng-model="item.Name" style="font-weight:bold">
+            <datalist id="missing">
+                <option ng-repeat="listItem in $root.missingMethods">{{listItem.Verb}}</option>
+            </datalist>
+        </div>
+        <div class="col-sm-3">
+            <input class="form-control" type=text ng-readonly="!$root.canEdit" placeholder="parameters" ng-model="item.Parameters">
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-danger col-sm-12 " ng-click="onButton(item)" onclick="return false;" role="button">Remove</button>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-sm-3">
+            <select class="form-control" ng-model="item.ReturnMode" ng-options="name for name in $root.ReturnTypes track by name"></select>
+        </div>
+        <div class="col-sm-3">
+            <select class="form-control" ng-model="item.CallMode" ng-options="(name | ordinal) for name in $root.CallTypes track by name"></select>
+        </div>
+        <div class="col-sm-3">
+            <select class="form-control" ng-model="item.RiskType" ng-options="('Risk level: ' + name) for name in $root.RiskLevels track by name"></select>
+        </div>
+        <div class="col-sm-3">
+            <select class="form-control" ng-model="item.RiskStatus" ng-options="('Risk status: ' + name) for name in $root.RiskStatuses track by name"></select>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-sm-12">
+            <input class="form-control" type=text class="col-sm-12" ng-readonly="!$root.canEdit" placeholder="Risk Description" ng-model="item.RiskDescription">
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col-sm-12">
+            <textarea class="form-control" rows="5" id="itemDescription" name="itemDescription" ng-readonly="!$root.canEdit" placeholder="Description" ng-model="item.Description" required class="span12"></textarea>
+            <span class="error" ng-show="generalForm.itemDescription.$error.required">
+                Description Required!
+            </span>
+        </div>
+    </div>
+</div>

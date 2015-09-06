@@ -1,0 +1,30 @@
+﻿<div class="top-buffer">
+    <div ng-if="data.RelatedTasks.length > 0">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Risk</th>
+                    <th>Risk Status</th>
+                    <th>Effort</th>
+                    <th>Effort Estimated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in data.RelatedTasks">
+                    <th scope="row">{{$index}}</th>
+                    <td>{{task.Name}}</td>
+                    <td>{{task.RiskType | ordinal}}</td>
+                    <td>{{task.RiskStatus}}</td>
+                    <td>{{task.Effort}}</td>
+                    <td>{{task.EffortEstimation}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-if="data.RelatedTasks.length == 0">
+        <p class="lead">No Tasks</p>
+    </div>
+</div>
+

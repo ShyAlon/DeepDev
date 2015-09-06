@@ -1,0 +1,52 @@
+﻿<div class="animate-hide" ng-hide="data.hide" style="padding-bottom: 30px;" ng-cloak>
+    <div ng-show="data.size">
+        <content-item item='data' on-button="data.hideSequence = !data.hideSequence" on-edit="data.hideSequence" content="'show'"></content-item>
+        <div class="animate-hide" ng-hide="data.hideSequence">
+            <p ng-show="data.Entity.Description"><b>Description: </b>{{data.Entity.Description}}</p>
+            <p ng-show="data.TopRisk != 'Unknown'"><b>TopRisk: </b>{{data.TopRisk}}</p>
+            <p ng-style="{ 'color':data.Entity.color }" ng-show="data.Entity.Status"><b>Status: {{data.Entity.Status}}</b></p>
+        </div>
+        </div>
+        <!--p ng-show="data.Entity.Status"><b>Status: </b>{{data.Entity.Status}}</p-->
+        <style>
+            svg {
+                width: 100%;
+                border: 1px solid white;
+                box-sizing: border-box;
+            }
+        </style>
+    <div ng-if="data" ng-style="{height:data.Entity.height+2*data.Entity.margin}">
+        <svg version="1.1" vbox="{{-data.Entity.margin}} {{-data.Entity.margin}} {{data.Entity.width+2*data.Entity.margin}} {{data.Entity.height+2*data.Entity.margin}}" style="height:inherit">
+            <desc>Hand drawn data.Entity diagram</desc>
+            <g stroke="black" font-family="Arial" text-anchor="middle" ng-attr-transform="scale({{getScale(data.Entity.users)}})">
+                <!-- draw user boxes and the vertical lines -->
+                <g ng-repeat="user in data.Entity.users" ng-attr-transform="translate({{user.first ? user.x : user.x -60}}, {{user.y}})" font-size="12">
+                    <polyline ng-attr-points="{{user.first  ? data.Entity.rectByHand(0,0,140,50) : data.Entity.rectByHand(0,0,200,50)}}" fill="#D8D8D8" stroke-width="2" />
+                    <text ng-show="user.name.split(';;')[1]" x="{{user.first ? 70 : 100}}" y="15" stroke-width="0.5" dominant-baseline="middle">{{user.name.split(";;")[0]}}</text>
+                    <text ng-show="user.name.split(';;')[1]" x="{{user.first ? 70 : 100}}" y="35" stroke-width="0" dominant-baseline="middle">{{user.name.split(";;")[1]}}</text>
+                    <text ng-hide="user.name.split(';;')[1]" x="{{user.first ? 70 : 100}}" y="25" stroke-width="0.5" dominant-baseline="middle">{{user.name.split(";;")[0]}}</text>
+                </g>
+                <g ng-repeat="line in data.Entity.lines" ng-attr-transform="translate({{line.x}}, {{line.y}})"
+                   stroke-width="2">
+                    <polyline ng-attr-points="{{data.Entity.byHand(0,0,line.dx,line.dy)}}" fill="none" stroke="grey" />
+                </g>
+                <!-- draw arrows between users -->
+                <g ng-repeat="arrow in data.Entity.arrows" stroke-width="2" ng-attr-transform="translate({{arrow.x}}, {{arrow.y}})">
+                    <rect ng-attr-x="{{data.Entity.Math.min(3, arrow.length*arrow.direction+3)}}" y="-16" ng-attr-width="{{data.Entity.Math.abs((arrow.length-6)*arrow.direction)}}" height="19"
+                          fill="white" stroke-width="0" stroke="white" />
+                    <polyline ng-attr-points="{{data.Entity.byHand(0,0,arrow.length*arrow.direction,0)}}" fill="none" style="stroke-dasharray: {{arrow.dashed &amp;&amp; '9, 4' || '0'}}" stroke="grey" />
+                    <polyline ng-attr-points="{{data.Entity.byHand((arrow.length-11)*arrow.direction, -10*arrow.direction, (arrow.length-1)*arrow.direction, 0)}}" stroke="grey" />
+                    <polyline ng-attr-points=" {{data.Entity.byHand((arrow.length-1)*arrow.direction , 0 , (arrow.length-11)*arrow.direction, 10*arrow.direction)}}" fill="none" stroke="grey" />
+                    <text ng-attr-x="{{arrow.length*arrow.direction/2}}" y="-8" stroke-width="0" dominant-baseline="middle" font-size="14">{{arrow.text.split(";;")[0]}}</text>
+                    <text ng-attr-x="{{arrow.length*arrow.direction/2}}" y="+10" stroke-width="0.5" dominant-baseline="middle" font-size="10">{{arrow.text.split(";;")[1] | ordinal}}</text>
+                </g>
+                <!-- draw note boxes -->
+                <g ng-repeat="note in data.Entity.notes" stroke-width="1"
+                   ng-attr-transform="translate({{note.x}}, {{note.y}})">
+                    <polyline ng-attr-points="{{data.Entity.rectByHand(-note.text.length*5,0,note.text.length,data.Entity.note_height)}}" fill="white" />
+                    <text ng-bind="note.text" ng-attr-x="{{-note.text.length*2}}" ng-attr-y="{{data.Entity.note_height/2}}" stroke-width="0" dominant-baseline="middle" font-size="12">{{note.text}}</text>
+                </g>
+            </g>
+        </svg>
+    </div>
+    </div>

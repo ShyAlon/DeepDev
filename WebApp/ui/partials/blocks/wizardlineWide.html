@@ -1,0 +1,10 @@
+﻿<div class="span12" bs-tooltip="$root.tooltip('attachedItem', entityType, item)" placement="auto">
+    <div class="well well-sm row" style="margin:0">
+        <span class="col-sm-10" ng-show="item.link">
+            <a ng-href="{{item.link}}" a-disabled='!item.link'>{{item.Name | truncate:30}} - {{item.Description | truncate:180}}</a>
+        </span>
+        <span class="col-sm-2">
+            <button class="btn btn-primary" style="margin-left: 30px; float:right" ng-click="onButton({item: item})">Remove</button>
+        </span>
+    </div>
+</div>

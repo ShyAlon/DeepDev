@@ -1,0 +1,42 @@
+<!-- Sidebar -->
+<div id="leftbar-wrapper" ng-if="$root.userName">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="text-align: center;" bs-tooltip="$root.tooltip('navigationBlock')" placement="right">Project tree</div>
+        <div class="panel-body" >
+            <ul class="nopadding" ng-if="$root.tree" style="list-style: none;">
+                <li ng-repeat="data in $root.tree">
+                    <tree family="data">
+                        <!--HTML to be transcluded-->
+                        <div style="margin: .6em;">
+                            <span class="fa fa-leaf " style="border:none" ng-show="!family.hasChildren"></span>
+                            <span ng-show="family.hasChildren" ng-click="$root.toggleNode(family,$event);">
+                                <i class="fa fa-plus-circle " style="border:none" ng-show="family.collapsed"></i>
+                                <i class="fa fa-minus-circle " style="border:none" ng-show="!family.collapsed"></i>
+                            </span>
+                            <button class="btn btn-primary " ng-click="$root.treeClick(family);" ng-show="family.target" bs-tooltip="family.name"
+                                    ng-class="{'btn-xs': (family.id != $root.wizardItem.Id || family.type != $root.data.Type) || family.id < 1 }" style="font-size:smaller">
+                                <div ng-if="!family.isProject">
+                                    {{family.index}} {{family.name | truncate:16}}
+                                </div>
+                                <div ng-if="family.isProject" style="font-size:large; font-weight:bold">
+                                    {{family.index}} {{family.name | truncate:16}}
+                                </div>
+                            </button>
+                            <span ng-hide="family.target" class="label label-primary" style="font-size: smaller">
+                                {{family.name | truncate:16}} ({{family.nodes.length}})
+                            </span>
+                        </div>
+                    </tree>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            <span>
+                <button class="btn btn-sm btn-success" href="#" ng-click="$root.createProject()" onclick="return false;" role="button" id="createProjectButton"
+                        bs-tooltip="buttonTooltip('createProject')" placement="auto">
+                    {{'createProject' | translate}}
+                </button>
+            </span>
+        </div>
+    </div>
+</div>

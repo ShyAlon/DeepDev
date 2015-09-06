@@ -1,0 +1,56 @@
+﻿<div ng-repeat='(key, prop) in $root.data.Children track by key'>
+    <div ng-hide="key=='Methods' || key=='Actions'|| key=='Tests' || key=='Parameters' || key=='TestParameters'">
+        <div block type="collapse" item="{ title: key, count: $root.data.Children[key].length}" on-button="$root.data['hide' + key] = !$root.data['hide' + key]" on-edit="$root.data['hide' + key] "></div>
+        <div class="row animate-hide" ng-hide="$root.data['hide'+key] ">
+            <div ng-repeat="child in $root.data.Children[key]">
+                <div block type="system" entity-type="key" item="child.Entity" on-button="deleteChild({ item: child, type: key })"
+                     on-edit="editChild(child)" get-status="getChildStatus({ item: child, type: key })"></div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="key=='Methods'">
+        <div block type="collapse" item="{ title: key, count: $root.data.Children[key].length}" on-button="$root.data['hide' + key] = !$root.data['hide' + key]" on-edit="$root.data['hide' + key] "></div>
+        <div class="row animate-hide" ng-hide="$root.data['hide'+key] ">
+            <div ng-repeat="child in $root.data.Children[key]">
+                <div block type="method" item="child.Entity" on-button="deleteChild({ item: child, type: key })"
+                     on-edit="editChild(child)" get-status="getChildStatus({ item: child, type: key })"></div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="key=='Actions' || key=='Tests'">
+        <div block type="collapse" item="{ title: key, count: $root.data.Children[key].length}" on-button="$root.data['hide' + key] = !$root.data['hide' + key]" on-edit="$root.data['hide' + key] "></div>
+        <div class="row animate-hide" ng-hide="$root.data['hide'+key] ">
+            <div ng-repeat="child in $root.data.Children[key]">
+                        <div block type="test" item="child.Entity" data="child" on-button="deleteChild({ item: child, type: key })"
+                             on-edit="editChild(child)" get-status="getChildStatus({ item: child, type: key })"></div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="key=='Parameters'">
+        <div block type="collapse" item="{ title: key, count: $root.data.Children[key].length}" on-button="$root.data['hide' + key] = !$root.data['hide' + key]" on-edit="$root.data['hide' + key] "></div>
+        <div class="row animate-hide" ng-hide="$root.data['hide'+key] ">
+            <div ng-repeat="child in $root.data.Children[key]">
+                <div block type="parameter" item="child.Entity" data="child" on-button="deleteChild({ item: child, type: key })"
+                     on-edit="editChild(child)" get-status="getChildStatus({ item: child, type: key })"></div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="$root.data.IssueStatuses">
+        <div class="row animate-hide" ng-hide="hideDefinedItems">
+            <hr ng-show="subItems().length > 0" />
+            <div class="row top-buffer" ng-repeat="child in subItems()">
+                <div block type="testParameter" item="child" on-button="deleteChild({ item: child })"
+                     on-edit="editChild({ item: child })" get-status="getChildStatus({ item: child })"></div>
+            </div>
+        </div>
+        <div block type="collapse" item="{ title: 'Unverified Use Case Tests', count: potentialItems().length}" on-button="hidePotentialItems = !hidePotentialItems" on-edit="hidePotentialItems"></div>
+        <div class="row animate-hide" ng-hide="hidePotentialItems">
+            <div class="row top-buffer" ng-repeat="child in potentialItems()">
+                <div block type="testParameter" item="child" on-button="deleteChild({ item: child })"
+                     on-edit="editChild({ item: child })" get-status="getChildStatus({ item: child })"></div>
+            </div>
+        </div>
+    </div>
+        <!--p>{{key}} : {{prop}}</!--p>
+        <input type='text' ng-model='myObject[key]'-->
+</div>

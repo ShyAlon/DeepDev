@@ -1,0 +1,13 @@
+﻿<div style="page-break-inside: avoid;">
+    <h4><u>{{data.Entity.Name}}</u></h4>
+    <div><pre>{{data.string.split(';;')[0]}}</pre></div>
+    <div><b>Description:</b> {{data.Entity.Description}}</div>
+    <div><b>Call Type:</b> {{data.Entity.ReturnMode | ordinal}}</div>
+    <div><b>Call Mode:</b> {{data.Entity.CallMode | ordinal}}</div>
+    <div ng-hide="!data.Entity.Return || data.Entity.Return == 'None' "><b>Returns:</b> {{data.Entity.Return | ordinal}}</div>
+    <div ng-hide="data.Entity.RiskType =='None'">
+        <p><b>Risk Level: </b>{{data.Entity.RiskType}}</p>
+        <p><b>Risk Status: </b>{{data.Entity.RiskStatus}}</p>
+        <p ng-show="data.Entity.RiskDescription">{{data.Entity.RiskDescription}}</p>
+    </div>
+</div>

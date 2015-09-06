@@ -1,0 +1,263 @@
+/** TODO this can be cleaned up, LESSified, and minimized **/
+
+/* just commit to showing the scroll on the right.  otherwise looks funny when
+   navbar is resized horizonally when vertical scroll appears */
+html {
+    overflow-y: scroll;
+}
+
+/* anchor tags should use pointer like buttons */
+a {
+    cursor: pointer;
+}
+
+/** this allows us to display nothing until angular has applied changes to the dom
+    without this we see what the dom wants to display first, and then get an update
+    within milliseconds once angular is finished. -- it's the "funny flicker effect"
+ **/
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}
+
+/** **
+supports grid feature
+**/
+
+/******** Grid Global ********/
+
+.ngPagerControl .ngPagerButton {
+    /** pagination buttons are pushed down 10px... fix that here... **/
+    margin-top: -10px;
+
+    /** and a little space in between  **/
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.nglabel {
+    display: block;
+    float: left;
+    font-weight: bold;
+    padding-right: 5px;
+}
+
+.ngNoSelect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/** better position ngGrid cell contents **/
+.ngCell div {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+/******** Grid ********/
+
+.gridStyle {
+    border: 1px solid rgb(212, 212, 212);
+    /* width: none !important; */
+    height: 420px;
+}
+
+.ngGrid {
+    background-color: rgb(253, 253, 253);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/******** Header ********/
+
+.ngGroupPanel {
+    background-color: rgb(234, 234, 234);
+    overflow: hidden;
+    border-bottom: 1px solid rgb(212, 212, 212);
+}
+
+.ngGroupPanelDescription {
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.ngGroupList {
+    list-style-type: none;
+}
+
+/***
+   modal / login / password
+**/
+
+.modal-body {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+}
+
+.modal-body * {
+    display: block;
+    margin: 10px 0 5px 0;
+    /* width: 95% ;*/
+}
+
+#password {
+    display: inline;
+    float: left;
+    max-width: 69%;
+    min-width: 63px;
+}
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    background: #F00;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    max-height:50%;
+      margin-bottom: 50px;
+    overflow-x:auto;  
+}
+
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    list-style: none;
+      -webkit-padding-start: 10px;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.sidebar-nav a {
+    display: block;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+.top-buffer{
+    margin-top: 10px;
+}
+
+.nopadding{
+    padding: 0;
+}
+
+.small-padding{
+    padding: 5px;
+}
+
+.animate-hide {
+    -webkit-transition:all linear 0.3s;
+    transition:all linear 0.3s;
+    opacity:1;
+    margin-top:0px;
+    background:white;
+  }
+ 
+  .animate-hide.ng-hide-add,
+  .animate-hide.ng-hide-remove {
+    display:block!important;
+  }
+ 
+  .animate-hide.ng-hide {
+    line-height:0;
+    opacity:0;
+    margin-top:-50px;
+  }
+
+  .side-panel{
+      font-size:11px;
+  }
+
+    a.disabled {
+        color: #AAAAAA;
+        cursor: default;
+        pointer-events: none;
+        text-decoration: none;
+    }
+
+    .ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin:20px 0;
+}
+
+  hr.soften {
+  height: 1px;
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
+  background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
+  background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
+  background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.8), rgba(0,0,0,0));
+  border: 0;
+}
+
+  .advancedSearchBox{display:block;position:relative;margin:5px 0 10px;border:1px solid #ccc;border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;min-height:40px;padding:0 9px;background-color:#fff;cursor:text;line-height:38px}.advancedSearchBox.active{border-color:#66afe9}.advancedSearchBox .search-icon{float:right;padding:10px 0 0 10px}.advancedSearchBox .remove-all-icon{float:right;padding:10px 0 0 10px;cursor:pointer}.advancedSearchBox .search-parameter{display:inline-block;height:24px;margin:0 7px 0 0;background-color:#5bc0de;padding:0 5px;border-radius:4px;-webkit-border-radius:4px;-moz-border-radius:4px;line-height:24px;cursor:default;transition:box-shadow 100ms linear}.advancedSearchBox .search-parameter:hover{box-shadow:0 3px 3px rgba(0,0,0,.2)}.advancedSearchBox .search-parameter div{float:left;margin:0 2px}.advancedSearchBox .search-parameter .remove{color:#fff;margin-left:5px;cursor:pointer}.advancedSearchBox .search-parameter .key,.advancedSearchBox .search-parameter .value span{color:#fff}.advancedSearchBox .search-parameter .value input{height:24px}.advancedSearchBox .search-parameter-input{display:inline-block;width:auto;height:24px;border:0;margin:0;padding:0}.advancedSearchBox .search-parameter-input:focus{box-shadow:none;outline:0}.advancedSearchBox .search-parameter-suggestions{cursor:auto;display:block}.advancedSearchBox .search-parameter-suggestions .title{display:block;float:left;height:25px;margin:7px 7px 0 0;background-color:transparent;color:#888;font-weight:700;padding:0 5px;font-size:14px;line-height:25px}.advancedSearchBox .search-parameter-suggestions .search-parameter{cursor:pointer;background-color:#bdbdbd;color:#fff}

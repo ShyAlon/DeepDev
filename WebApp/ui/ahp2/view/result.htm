@@ -1,0 +1,28 @@
+<div class="ui labeled icon button" ng-click="save()">
+  <i class="upload disk icon"></i>
+  Save
+</div>
+
+<div class="ui labeled icon button" ng-click="load()">
+  <i class="download disk icon"></i>
+  Upload
+</div>
+
+<table class="ui basic table segment">
+  <thead>
+    <tr>
+      <th>Alternative</th>
+      <th>Price</th>
+      <th>Utility</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="result in solution | orderBy:'rating':true">
+      <td>{{result.alternative.name}}</td>
+      <td>{{result.alternative.priceNormalized | number}}</td>
+      <td>{{result.alternative.utility | number}}</td>
+      <td>{{result.rating | number}}</td>
+    </tr>
+  </tbody>
+</table>

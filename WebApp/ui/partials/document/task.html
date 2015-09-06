@@ -1,0 +1,88 @@
+﻿<div class="top-buffer">
+    <form name="generalForm" class="row form-horizontal top-buffer" style="border-style: groove; padding: 12px; margin-left: 30px;">
+        <div class="row-fluid">
+            <div class="col-sm-3">
+                <b>Priority: </b>{{data.Entity.Priority}}
+            </div>
+            <div class="col-sm-9" ng-bind-html="data.Entity.Description">
+
+            </div>
+        </div>
+        <br />
+        <div class="row-fluid">
+            <div class="col-sm-3">
+                <b>Created By: </b>{{data.Creator}}
+            </div>
+            <div class="col-sm-3">
+                <b>Created: </b>{{data.Entity.Created | date:'medium'}}
+            </div>
+            <div class="col-sm-3">
+                <b>Modified By: </b>{{data.LastModifier}}
+            </div>
+            <div class="col-sm-3">
+                <b>Modified: </b>{{data.Entity.Modified | date:'medium'}}
+            </div>
+        </div>
+        <br />
+        <div class="row-fluid" >
+            <div class="col-sm-3" ng-style="{ 'color':data.Entity.color }">
+                <b>Risk Level: </b>{{data.Entity.RiskType | ordinal}}
+            </div>
+            <div class="col-sm-3" ng-style="{ 'color':data.Entity.color }">
+                <b>Risk Status: </b>{{data.Entity.RiskStatus}}
+            </div>
+            <div class="col-sm-3" ng-style="{ 'color':data.Entity.effortColor }">
+                <b>Total Effort: </b>{{data.TotalEffort}}
+            </div>
+            <div class="col-sm-3" ng-style="{ 'color':data.Entity.effortColor }">
+                <b>Total Effort Estimation: </b>{{data.TotalEffortEstimation}}
+            </div>
+        </div>
+        <br />
+        <div class="row-fluid">
+            <div class="col-sm-3" ng-style="{ 'color':data.Entity.color }">
+                <b>Risk Level: </b>{{data.Entity.RiskType | ordinal}}
+            </div>
+            <div class="col-sm-3" ng-style="{ 'color':data.Entity.color }">
+                <b>Risk Status: </b>{{data.Entity.RiskStatus}}
+            </div>
+            <div class="col-sm-3" ng-style="{ 'color':data.Entity.effortColor }">
+                <b>Specific Effort: </b>{{data.Entity.Effort}}
+            </div>
+            <div class="col-sm-3" ng-style="{ 'color':data.Entity.effortColor }">
+                <b>Specific Effort Estimation: </b>{{data.Entity.EffortEstimation}}
+            </div>
+        </div>
+        <br />
+        <div class="row-fluid">
+            <div class="col-sm-3" ng-show="data.Container">
+                <b>{{data.Container.Type}}: </b>{{data.Container.Entity.Name}}
+            </div>
+            <div class="col-sm-3" ng-hide="data.Container">
+                <b>Container: </b>Not set
+            </div>
+            <div class="col-sm-3">
+                <b>Execution Status: </b>{{data.Entity.Status}}
+            </div>
+            <div class="col-sm-3">
+                <b>Owner: </b>{{data.Entity.Owner}}
+            </div>
+            <div class="col-sm-3" ng-show="data.Entity.Closed && data.Entity.Closed.substring(0, 4) != '9999'">
+                <b>Closed Time: </b>{{data.Entity.Closed}}
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Add Issues -->
+<div ng-if="data.Children">
+    <div ng-repeat="child in data.Children">
+        <content-item item='child'
+                      on-button="child.hide = !child.hide" on-edit="child.hide"></content-item>
+        <div class="animate-hide" ng-hide="child.hide">
+            <document-children data="child" header="header+1" type="Task">
+
+            </document-children>
+        </div>
+    </div>
+</div>
+

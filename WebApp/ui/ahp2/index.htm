@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html ng-app="ahp">
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="Maksym Prychynenko" />
+  <title>AHP Calculator</title>
+  
+  <link href="css/semantic.min.css" rel="stylesheet" type="text/css" />
+  <link href="css/xeditable.css" rel="stylesheet" type="text/css" />
+  <link href="css/fonts.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="ui three steps" ng-controller="navCtrl">
+    <a class="ui step" ng-class="{'active':isActive('/alternatives')}" href="#!/alternatives">
+      Alternatives
+    </a>
+    <a class="ui step" ng-class="{'active':isActive('/criteria')}" href="#!/criteria">
+      Criteria
+    </a>
+    <a class="ui step" ng-class="{'active':isActive('/result')}" href="#!/result">
+      Result
+    </a>
+  </div>
+  
+  <ng-view></ng-view>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+  <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+  
+  <script src="js/vendor/angular-semantic-ui/angular-semantic-ui.js"></script>
+  <script src="js/vendor/angular-semantic-ui/modal.js"></script>
+  <script src="js/vendor/nw-fileDialog.js"></script>
+  
+  <script src="js/vendor/xeditable.min.js"></script>
+  
+  <script src="js/app.js"></script>
+  
+  <script src="js/services/ahp.js"></script>
+  
+  <script src="js/controllers/nav.js"></script>
+  <script src="js/controllers/alternatives.js"></script>
+  <script src="js/controllers/criteria.js"></script>
+  <script src="js/controllers/criteria-configure.js"></script>
+  <script src="js/controllers/criteria-compare.js"></script>
+  <script src="js/controllers/result.js"></script>
+</body>
+</html>
