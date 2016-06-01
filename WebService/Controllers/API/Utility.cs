@@ -354,6 +354,10 @@ namespace UIBuildIt.WebService.Controllers.API
         /// <returns></returns>
         public static bool IsAncestor(this Requirement item, Requirement child, UIBuildItContext db)
         {
+            if(child == null)
+            {
+                return false;
+            }
             if(child.Id == item.Id)
             {
                 return true;

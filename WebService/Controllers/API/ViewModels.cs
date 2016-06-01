@@ -789,6 +789,8 @@ namespace UIBuildIt.WebService.Controllers.API
             Item parent = data.Entity.GetParent(db);
             if(parent == null)
             {
+                //todo: return the exception
+                return;
                 throw new ArgumentException("No parent for " + data.Entity.Name);
             }
             data.Entity.ParentType = parent.GetType().Name;

@@ -187,8 +187,8 @@ namespace UIBuildIt.WebService.Controllers.API
                     if (parent != null)
                     {
                         SetProject(db, parent);
-                        source = db.Set<T>().FirstOrDefault(t => t.Id == source.Id);
-                        source.ProjectId = parent.ProjectId;
+                        var target = db.Entry(source);
+                        ((Item)target.Entity).ProjectId = parent.ProjectId;
                         //var entry = db.Entry(source);
                         //entry.State = EntityState.Modified;
                         db.SaveChanges();

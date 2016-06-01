@@ -268,9 +268,7 @@ angular.module('DeepDev.services')
             //console.log(item);
             server.deleteEntity(entity.Entity, function (data) {
                 if (entity.Entity.ParentId > 0) {
-                    //console.log("deleted " + entity.Type);
-                    //console.log("Getting " + entity.ParentType + " with ID " + entity.Entity.ParentId);
-                    server.getEntity({ id: entity.Entity.ParentId }, deleteChildCallback, null, entity.ParentType);
+                    server.getEntity({ id: entity.Entity.ParentId }, deleteChildCallback, null, entity.parentType);
                 } else { //project
                     $location.path("/");
                 }
@@ -1071,7 +1069,7 @@ angular.module('DeepDev.services')
             updateSequence: function (sequence) {
                 var returnQueue = [];
 
-                sequence.Entity.Initiator = sequence.Entity.Initiator || "Initiator";
+                sequence.Entity.Initiator = sequence.Entity.Initiator || "";
                 if (sequence.Entity.Initiator && sequence.Methods && sequence.Methods.length > 0) {
                     sequence.Entity.definition = sequence.Entity.Initiator;
                     for (var i = 0; i < sequence.Methods.length; i++) {
